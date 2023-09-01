@@ -1,0 +1,10 @@
+{
+  "name": "assets",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {},
+  "author": "",
+  "devDependencies": {
+    "color": "^4.2.3"
+  }
+}
