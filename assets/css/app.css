@@ -42,12 +42,16 @@
   }
 }
 
+.splide__pagination {
+  @apply relative bottom-4;
+}
+
 .splide__pagination__page.is-active {
-  @apply bg-pink-600;
+  @apply bg-beanie-gold-600;
 }
 
 .splide__pagination__page {
-  @apply bg-cobalt-200;
+  @apply bg-pink-100;
 }
 
 .splide__arrow {

@@ -20,10 +20,14 @@ module.exports = {
     extend: {
       colors: {
         'beanie-gold': {
+          50: lighten('#FEBD3B', .56),
           100: lighten('#FEBD3B', .5),
           200: lighten('#FEBD3B', .4),
           300: lighten('#FEBD3B', .3),
-          600: '#FEBD3B'
+          600: '#FEBD3B',
+          700: darken('#FEBD3B', 0.1),
+          800: darken('#FEBD3B', 0.2),
+          900: darken('#FEBD3B', 0.3),
         },
         cobalt: {
           100: '#D9E9EF',

@@ -29,8 +29,9 @@ const hooks = {
 
       this.splide = new Splide(splideEl, {
         type   : 'loop',
-        padding: '3rem',
-        start: splideEl.dataset['startIndex'] || 0
+        // padding: '2rem',
+        start: splideEl.dataset['startIndex'] || 0,
+        flickMaxPages: 0.3 // bad name, actually more of a power multiplier
       })
 
       window.splideDebug = this.splide
