@@ -2,8 +2,13 @@
 // https://tailwindcss.com/docs/configuration
 
 const plugin = require("tailwindcss/plugin")
+const defaultTheme = require('tailwindcss/defaultTheme')
 const fs = require("fs")
 const path = require("path")
+const Color = require('color')
+
+const lighten = (clr, val) => Color(clr).lighten(val).rgb().string()
+const darken = (clr, val) => Color(clr).darken(val).rgb().string()
 
 module.exports = {
   content: [
@@ -14,12 +19,34 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: "#FD4F00",
-      }
+        'beanie-gold': {
+          100: lighten('#FEBD3B', .5),
+          200: lighten('#FEBD3B', .4),
+          300: lighten('#FEBD3B', .3),
+          600: '#FEBD3B'
+        },
+        cobalt: {
+          100: '#D9E9EF',
+          200: darken('#D9E9EF', 0.2),
+          300: lighten('#006E97', 0.3),
+          600: '#006E97',
+          700: darken('#006E97', 0.1),
+          800: darken('#006E97', 0.2),
+          900: darken('#006E97', 0.3)
+        },
+        pink: {
+          600: '#e5097f'
+        }
+      },
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      },
     },
   },
   plugins: [
     require("@tailwindcss/forms"),
+    require('@tailwindcss/typography'),
+
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
     //

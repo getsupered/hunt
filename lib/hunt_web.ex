@@ -51,7 +51,8 @@ defmodule HuntWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {HuntWeb.Layouts, :app}
+        layout: {HuntWeb.Layouts, :app},
+        container: {:div, class: "h-[100vh]"}
 
       unquote(html_helpers())
     end
@@ -107,5 +108,16 @@ defmodule HuntWeb do
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
+  end
+
+  def uri_path(uri, params) do
+    query =
+      Plug.Conn.Query.decode(uri.query || "")
+      |> Map.merge(params)
+      |> Enum.reject(fn {_k, v} -> v == nil or v == "" end)
+      |> Map.new()
+
+    new_uri = Map.put(uri, :query, Plug.Conn.Query.encode(query))
+    %{new_uri | scheme: nil, authority: nil, host: nil} |> URI.to_string()
   end
 end

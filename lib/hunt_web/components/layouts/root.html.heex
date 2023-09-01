@@ -4,11 +4,36 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title suffix=" · Phoenix Framework">
-      <%= assigns[:page_title] || "Hunt" %>
+    <.live_title suffix=" · Supered Dupered Challenge">
+      <%= assigns[:page_title] || "INBOUND23" %>
     </.live_title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
+      rel="stylesheet"
+    />
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+
+    <script type="text/javascript">
+      function checkMinimumViewportSize() {
+        const viewport = document.head.querySelector('meta[name="viewport"]')
+        const WIDTH = 450
+
+        if (window.screen.width < WIDTH) {
+          viewport.setAttribute('content', `width=${WIDTH}`)
+        } else {
+          viewport.setAttribute('content', 'width=device-width, initial-scale=1, shrink-to-fit=no')
+        }
+      }
+
+      checkMinimumViewportSize()
+      window.addEventListener('resize', checkMinimumViewportSize)
+    </script>
+
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js">
     </script>
   </head>
   <body class="bg-white antialiased">
