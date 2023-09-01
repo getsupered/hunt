@@ -17,7 +17,7 @@ defmodule HuntWeb.Router do
   scope "/", HuntWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive
   end
 
   # Other scopes may use custom stacks.
