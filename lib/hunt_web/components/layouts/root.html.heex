@@ -55,5 +55,23 @@
         </div>
       </div>
     </div>
+
+    <div id="camera-upload" phx-hook="CameraUploader">
+      <div class="transition-all translate-y-full z-50 fixed max-w-2xl mx-auto bottom-0 top-40 left-0 right-0">
+        <div class="relative h-full bg-white mx-4 rounded-t-xl p-4 overflow-auto dropped-border !border-b-0">
+          <div class="flex items-center mb-4">
+            <h2 class="text-2xl font-bold flex-grow">Photo Upload</h2>
+
+            <button id="camera-upload--cancel">
+              <.icon name="hero-x-mark" class="h-10 w-10" />
+            </button>
+          </div>
+
+          <div class="p-4">
+            XYZ
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

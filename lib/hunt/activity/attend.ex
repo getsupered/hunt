@@ -1,6 +1,6 @@
 defmodule Hunt.Activity.Attend do
   use HuntWeb, :verified_routes
-  use HuntWeb, :live_component
+  use HuntWeb, :html
 
   def title do
     "Attend Awesome Events"

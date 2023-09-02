@@ -56,6 +56,34 @@ const hooks = {
       }
     }
   },
+  CameraButton: {
+    mounted() {
+      this.el.addEventListener('click', () => {
+        const evt = new CustomEvent('camera:start')
+        window.dispatchEvent(evt)
+      })
+    }
+  },
+  CameraUploader: {
+    mounted() {
+      document.getElementById('camera-upload--cancel').addEventListener('click', () => {
+        this.el.children[0].classList.remove('!translate-y-0')
+      })
+
+      this.startFunction = () => {
+        this.el.children[0].classList.add('!translate-y-0')
+      }
+
+      window.addEventListener('camera:start', this.startFunction)
+    },
+    updated() {
+      this.destroyed()
+      this.mounted()
+    },
+    destroyed() {
+      window.removeEventListener('camera:start', this.startFunction)
+    },
+  },
   QRScanButton: {
     mounted() {
       this.el.addEventListener('click', () => {

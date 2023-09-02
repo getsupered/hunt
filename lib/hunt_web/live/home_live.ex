@@ -50,27 +50,32 @@ defmodule HuntWeb.HomeLive do
   end
 
   def mount(params, _session, socket) do
+    mods = [
+      Hunt.Activity.Lounge,
+      Hunt.Activity.Attend,
+      Hunt.Activity.Selfie1,
+      Hunt.Activity.Selfie2,
+      Hunt.Activity.Selfie3
+    ]
+
+    completion = Enum.map(mods, fn mod ->
+      completion = %{
+        ids: [],
+        achievement: false,
+        count: 0,
+        activity_count: 0,
+        points: 0
+      }
+
+      {mod, completion}
+    end)
+
     socket =
       socket
       # Do not reassign on change, or it forces an unnecessary update
       |> assign(:active_slide_index, params["feature"] || "0")
-      |> assign(:hunt_mods, [Hunt.Activity.Lounge, Hunt.Activity.Attend])
-      |> assign(:completion, %{
-        Hunt.Activity.Lounge => %{
-          ids: ["c44c98a2-2256-493c-9453-3db795693f0c"],
-          achievement: false,
-          count: 1,
-          activity_count: 1,
-          points: 50
-        },
-        Hunt.Activity.Attend => %{
-          ids: [],
-          achievement: false,
-          count: 0,
-          activity_count: 0,
-          points: 0
-        }
-      })
+      |> assign(:hunt_mods, mods)
+      |> assign(:completion, completion)
 
     {:ok, socket}
   end

@@ -1,6 +1,6 @@
 defmodule Hunt.Activity.Lounge do
   use HuntWeb, :verified_routes
-  use HuntWeb, :live_component
+  use HuntWeb, :html
 
   def title do
     "Lounge it up"
