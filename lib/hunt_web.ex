@@ -111,13 +111,23 @@ defmodule HuntWeb do
   end
 
   def uri_path(uri, params) do
+    url_params = Map.drop(params, ["path"])
+
     query =
       Plug.Conn.Query.decode(uri.query || "")
-      |> Map.merge(params)
+      |> Map.merge(url_params)
       |> Enum.reject(fn {_k, v} -> v == nil or v == "" end)
       |> Map.new()
+      |> Plug.Conn.Query.encode()
 
-    new_uri = Map.put(uri, :query, Plug.Conn.Query.encode(query))
+    new_uri = Map.merge(uri, %{
+      query: presence(query),
+      path: params["path"] || uri.path
+    })
+
     %{new_uri | scheme: nil, authority: nil, host: nil} |> URI.to_string()
   end
+
+  defp presence(""), do: nil
+  defp presence(s), do: s
 end

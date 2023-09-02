@@ -35,10 +35,12 @@ defmodule HuntWeb.HomeLive do
           <div class="relative h-full bg-white mx-4 rounded-t-xl p-4 overflow-auto dropped-border !border-b-0">
             <%= if @hunt do %>
               <div class="absolute right-4 top-4">
-                <.link patch={~p"/"} class="touch-manipulation">
+                <.link patch={HuntWeb.uri_path(@uri, %{"path" => "/"})} class="touch-manipulation">
                   <.icon name="hero-x-mark" class="h-10 w-10" />
                 </.link>
               </div>
+
+              <%= @hunt.component.(%{hunt: @hunt, completed: @completion}) %>
             <% end %>
           </div>
         </div>

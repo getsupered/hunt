@@ -9,7 +9,7 @@ defmodule HuntWeb.HuntCarousel do
 
         <div class="splide__track">
           <ul class="splide__list">
-            <li :for={slide <- @hunt_mods} class="splide__slide">
+            <li :for={{slide, slide_idx} <- Enum.with_index(@hunt_mods)} class="splide__slide">
               <div class="mx-4 mb-8 rounded-lg bg-white dropped-border overflow-hidden">
                 <img src={slide.image().src} class={"w-full max-h-[30vh] object-cover #{slide.image().class}"} />
                 <div class="px-3 py-2">
@@ -58,7 +58,7 @@ defmodule HuntWeb.HuntCarousel do
                 </li>
 
                 <li :for={act <- slide.activities()}>
-                  <.link patch={~p"/hunt/#{act.id}"} class="w-full flex items-start rounded px-4 py-3 dropped-border-sm touch-manipulation">
+                  <.link patch={~p"/hunt/#{act.id}?feature=#{slide_idx}"} class="w-full flex items-start rounded px-4 py-3 dropped-border-sm touch-manipulation">
                     <div class="flex-grow flex items-center">
                       <%= if act.id in @completion[slide].ids do %>
                         <div class="rounded-full flex-none bg-pink-50 h-12 w-12 flex items-center justify-center mr-4">
