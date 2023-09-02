@@ -20,6 +20,8 @@ import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
+import {Html5QrcodeScanner, Html5QrcodeSupportedFormats, Html5QrcodeScanType} from "html5-qrcode"
+
 import topbar from "../vendor/topbar"
 
 const hooks = {
@@ -51,6 +53,62 @@ const hooks = {
       if (this.splide) {
         console.log('splide destroy')
         this.splide.destroy()
+      }
+    }
+  },
+  QRScanButton: {
+    mounted() {
+      this.el.addEventListener('click', () => {
+        const evt = new CustomEvent('qrcode:start')
+        window.dispatchEvent(evt)
+      })
+    }
+  },
+  QRScanner: {
+    mounted() {
+      document.getElementById('qr-scanner--cancel').addEventListener('click', () => {
+        this.cleanUpScanner()
+        this.el.children[0].classList.remove('!translate-y-0')
+      })
+
+      this.startFunction = () => {
+        this.cleanUpScanner()
+
+        this.html5QrcodeScanner = new Html5QrcodeScanner(
+          'qr-scanner--reader',
+          {
+            fps: 10,
+            qrbox: { width: 250, height: 250 },
+            aspectRatio: 1.0,
+            formatsToSupport: [ Html5QrcodeSupportedFormats.QR_CODE ],
+            supportedScanTypes: [ Html5QrcodeScanType.SCAN_TYPE_CAMERA ],
+            rememberLastUsedCamera: false
+          },
+          false
+        )
+
+        this.html5QrcodeScanner.render((text) => {
+          this.cleanUpScanner()
+          this.el.children[0].classList.remove('!translate-y-0')
+        }, () => null)
+
+        this.el.children[0].classList.add('!translate-y-0')
+      }
+
+      window.addEventListener('qrcode:start', this.startFunction)
+    },
+    updated() {
+      this.destroyed()
+      this.mounted()
+    },
+    destroyed() {
+      this.cleanUpScanner()
+      window.removeEventListener('qrcode:start', this.startFunction)
+    },
+    cleanUpScanner() {
+      if (this.html5QrcodeScanner) {
+        this.html5QrcodeScanner.clear()
+        delete this.html5QrcodeScanner
       }
     }
   }

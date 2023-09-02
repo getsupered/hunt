@@ -70,3 +70,43 @@
 .splide__arrow--next {
   @apply right-0;
 }
+
+/*
+ * Customizations for QR Scanner
+ */
+
+#html5-qrcode-anchor-scan-type-change {
+  @apply mt-2 btn btn-muted btn-sm text-lg !no-underline;
+}
+
+#html5-qrcode-button-camera-permission {
+  @apply btn btn-muted text-lg;
+}
+
+#qr-scanner--reader__scan_region img {
+  @apply mx-auto;
+}
+
+#qr-scanner--reader__scan_region video {
+  @apply px-8;
+}
+
+select#html5-qrcode-select-camera {
+  @apply form-input w-[75%] mx-auto my-2;
+}
+
+select#html5-qrcode-select-camera:disabled {
+  @apply hidden;
+}
+
+#qr-scanner--reader__dashboard_section_csr span:has(select#html5-qrcode-select-camera:disabled) {
+  @apply hidden;
+}
+
+#html5-qrcode-button-camera-start {
+  @apply btn btn-muted text-lg;
+}
+
+#html5-qrcode-button-camera-stop {
+  @apply btn btn-muted text-lg;
+}

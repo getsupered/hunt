@@ -8,10 +8,7 @@
       <%= assigns[:page_title] || "INBOUND23" %>
     </.live_title>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet" />
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
 
     <script type="text/javascript">
@@ -40,5 +37,23 @@
   </head>
   <body class="bg-white antialiased">
     <%= @inner_content %>
+
+    <div id="qr-scanner" phx-hook="QRScanner" phx-update="ignore">
+      <div class="transition-all translate-y-full z-50 fixed max-w-2xl mx-auto bottom-0 top-40 left-0 right-0">
+        <div class="relative h-full bg-white mx-4 rounded-t-xl p-4 overflow-auto dropped-border !border-b-0">
+          <div class="flex items-center mb-4">
+            <h2 class="text-2xl font-bold flex-grow">Scan QR Code</h2>
+
+            <button id="qr-scanner--cancel">
+              <.icon name="hero-x-mark" class="h-10 w-10" />
+            </button>
+          </div>
+
+          <div class="p-4">
+            <div id="qr-scanner--reader" class="rounded-lg overflow-hidden"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
