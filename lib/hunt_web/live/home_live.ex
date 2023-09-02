@@ -32,10 +32,10 @@ defmodule HuntWeb.HomeLive do
         </main>
 
         <div class={"z-10 fixed max-w-2xl mx-auto bottom-0 top-40 left-0 right-0 transition-all #{if @hunt, do: "translate-y-0", else: "translate-y-full"}"}>
-          <div class="relative h-full bg-white mx-4 rounded-t-xl p-4 overflow-auto dropped-border">
+          <div class="relative h-full bg-white mx-4 rounded-t-xl p-4 overflow-auto dropped-border !border-b-0">
             <%= if @hunt do %>
               <div class="absolute right-4 top-4">
-                <.link patch={~p"/"}>
+                <.link patch={~p"/"} class="touch-manipulation">
                   <.icon name="hero-x-mark" class="h-10 w-10" />
                 </.link>
               </div>

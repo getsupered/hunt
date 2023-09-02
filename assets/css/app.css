@@ -56,7 +56,7 @@
 
 .splide__arrow {
   /* top-40 should align with the offset header size */
-  @apply bg-cobalt-100 top-40;
+  @apply bg-cobalt-100 top-40 touch-manipulation;
 }
 
 .splide__arrow svg {

@@ -58,7 +58,7 @@ defmodule HuntWeb.HuntCarousel do
                 </li>
 
                 <li :for={act <- slide.activities()}>
-                  <.link patch={~p"/hunt/#{act.id}"} class="w-full flex items-start rounded px-4 py-3 dropped-border-sm">
+                  <.link patch={~p"/hunt/#{act.id}"} class="w-full flex items-start rounded px-4 py-3 dropped-border-sm touch-manipulation">
                     <div class="flex-grow flex items-center">
                       <%= if act.id in @completion[slide].ids do %>
                         <div class="rounded-full flex-none bg-pink-50 h-12 w-12 flex items-center justify-center mr-4">
