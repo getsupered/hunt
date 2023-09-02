@@ -44,8 +44,8 @@ defmodule Hunt.Activity.Selfie1 do
     },
     %{
       id: "43663b50-612f-4f01-b93e-199304db5993",
-      title: "CEO of HubSpot",
-      action: "Get your selfie face ready",
+      title: "Selfie with Yamini Rangan",
+      action: "CEO of HubSpot",
       points: 100,
       component: &__MODULE__.selfie/1,
       linkedin: "https://www.linkedin.com/in/yaminirangan/"
