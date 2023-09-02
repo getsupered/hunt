@@ -18,6 +18,7 @@ defmodule HuntWeb.Router do
     pipe_through :browser
 
     live "/", HomeLive
+    live "/hunt/:hunt_id", HomeLive
   end
 
   # Other scopes may use custom stacks.

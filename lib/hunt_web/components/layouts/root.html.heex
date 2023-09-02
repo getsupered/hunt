@@ -17,7 +17,9 @@
     <script type="text/javascript">
       function checkMinimumViewportSize() {
         const viewport = document.head.querySelector('meta[name="viewport"]')
-        const WIDTH = 450
+        // Super weird glitch: iOS from 450-452 has an extra pixel on the width, and it isn't related to
+        // the page itself. Glitch goes away with slightly varied width.
+        const WIDTH = 453
 
         if (window.screen.width < WIDTH) {
           viewport.setAttribute('content', `width=${WIDTH}`)

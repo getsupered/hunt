@@ -39,7 +39,7 @@ const hooks = {
 
       this.splide.on('active', (evt) => {
         if (!evt.isClone) {
-          this.pushEventTo(this.el, 'slide.active', { index: evt.index })
+          this.pushEvent('slide.active', { index: evt.index })
         }
       })
     },

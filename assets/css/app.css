@@ -55,9 +55,18 @@
 }
 
 .splide__arrow {
-  @apply bg-cobalt-100;
+  /* top-40 should align with the offset header size */
+  @apply bg-cobalt-100 top-40;
 }
 
 .splide__arrow svg {
   @apply fill-cobalt-900;
+}
+
+.splide__arrow--prev {
+  @apply left-0;
+}
+
+.splide__arrow--next {
+  @apply right-0;
 }
