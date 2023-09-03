@@ -21,12 +21,13 @@
         if (window.screen.width < WIDTH) {
           viewport.setAttribute('content', `width=${WIDTH}`)
         } else {
-          viewport.setAttribute('content', 'width=device-width, initial-scale=1, shrink-to-fit=no')
+          viewport.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no')
         }
       }
 
-      checkMinimumViewportSize()
-      window.addEventListener('resize', checkMinimumViewportSize)
+      // Was originally trying to mess with the viewport, but it only led to sadness. Let it ride.
+      //checkMinimumViewportSize()
+      //window.addEventListener('resize', checkMinimumViewportSize)
     </script>
 
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>

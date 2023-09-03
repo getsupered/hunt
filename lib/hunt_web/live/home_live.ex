@@ -79,13 +79,11 @@ defmodule HuntWeb.HomeLive do
           socket
           |> load_completion()
           |> completed_notification()
-          |> push_patch(to: HuntWeb.uri_path(socket.assigns.uri, %{"path" => "/"}), replace: true)
 
         {:ok, %{approval_state: :pending}} ->
           socket
           |> load_completion()
           |> completed_notification()
-          |> push_patch(to: HuntWeb.uri_path(socket.assigns.uri, %{"path" => "/"}), replace: true)
 
         {:error, why} when is_binary(why) ->
           push_event(socket, "notification", %{type: "error", text: why})
