@@ -30,7 +30,7 @@ defmodule HuntWeb.HuntCarousel do
               </div>
 
               <ul class="mx-4 my-4 space-y-4">
-                <li class="rounded px-4 py-3 dropped-border-sm flex items-start">
+                <li class="rounded px-4 py-3 dropped-border-sm flex items-start gap-4">
                   <div class="flex-grow flex items-center">
                     <%= if @completion[slide].achievement do %>
                       <div class="rounded-full flex-none bg-pink-50 h-12 w-12 flex items-center justify-center mr-4">

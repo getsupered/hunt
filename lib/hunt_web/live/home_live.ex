@@ -53,11 +53,13 @@ defmodule HuntWeb.HomeLive do
     mods = [
       Hunt.Activity.Lounge,
       Hunt.Activity.Attend,
+      Hunt.Activity.Social,
       Hunt.Activity.Selfie1,
       Hunt.Activity.Selfie2,
       Hunt.Activity.Selfie3,
       Hunt.Activity.Fun,
-      Hunt.Activity.Hubolution
+      Hunt.Activity.Hubolution,
+      Hunt.Activity.Supered,
     ]
 
     completion = Enum.map(mods, fn mod ->
