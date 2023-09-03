@@ -23,8 +23,10 @@ import {LiveSocket} from "phoenix_live_view"
 import {Html5QrcodeScanner, Html5QrcodeSupportedFormats, Html5QrcodeScanType} from "html5-qrcode"
 
 import topbar from "../vendor/topbar"
+import { Notifications } from "./hooks/Notification"
 
 const hooks = {
+  Notifications,
   ImageCarousel: {
     mounted() {
       const splideEl = this.el.querySelector('.splide')
