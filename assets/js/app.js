@@ -30,11 +30,12 @@ const hooks = {
   ImageCarousel: {
     mounted() {
       const splideEl = this.el.querySelector('.splide')
+      const start = new URL(window.location.href).searchParams.get('feature') || 0
 
       this.splide = new Splide(splideEl, {
         type   : 'loop',
         // padding: '2rem',
-        start: splideEl.dataset['startIndex'] || 0,
+        start,
         flickMaxPages: 0.3 // bad name, actually more of a power multiplier
       })
 

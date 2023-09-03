@@ -4,7 +4,7 @@ defmodule HuntWeb.HuntCarousel do
   def render(assigns) do
     ~H"""
     <div id="image-carousel" phx-hook="ImageCarousel" class="p-4 z-0">
-      <section class="splide" data-start-index={@active_slide_index}>
+      <section class="splide">
         <ul class="splide__pagination"></ul>
 
         <div class="splide__track">

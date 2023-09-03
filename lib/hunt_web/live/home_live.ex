@@ -12,7 +12,6 @@ defmodule HuntWeb.HomeLive do
             module={HuntWeb.HuntCarousel}
             id="carousel"
             user={@user}
-            active_slide_index={@active_slide_index}
             hunt_mods={@hunt_mods}
             completion={@completion}
           />
@@ -36,13 +35,11 @@ defmodule HuntWeb.HomeLive do
     """
   end
 
-  def mount(params, session, socket) do
+  def mount(_params, session, socket) do
     socket = HuntWeb.load_user(session, socket)
 
     socket =
       socket
-      # Do not reassign on change, or it forces an unnecessary update
-      |> assign(:active_slide_index, params["feature"] || "0")
       |> assign(:hunt_mods, Hunt.Activity.activity_modules())
       |> load_completion()
 
@@ -79,11 +76,13 @@ defmodule HuntWeb.HomeLive do
           socket
           |> load_completion()
           |> completed_notification()
+          |> push_patch(to: HuntWeb.uri_path(socket.assigns.uri, %{"path" => "/"}))
 
         {:ok, %{approval_state: :pending}} ->
           socket
           |> load_completion()
           |> completed_notification()
+          |> push_patch(to: HuntWeb.uri_path(socket.assigns.uri, %{"path" => "/"}))
 
         {:error, why} when is_binary(why) ->
           push_event(socket, "notification", %{type: "error", text: why})
