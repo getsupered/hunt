@@ -41,7 +41,13 @@ defmodule HuntWeb.HomeLive do
                 </.link>
               </div>
 
-              <%= @hunt.component.(%{hunt: @hunt, completed: @completion}) %>
+              <.live_component
+                module={HuntWeb.HuntRender}
+                id="hunt-display"
+                user={@user}
+                hunt={@hunt}
+                completion={@completion}
+              />
             <% end %>
           </div>
         </div>
@@ -53,38 +59,27 @@ defmodule HuntWeb.HomeLive do
   def mount(params, session, socket) do
     socket = HuntWeb.load_user(session, socket)
 
-    mods = [
-      Hunt.Activity.Lounge,
-      Hunt.Activity.Attend,
-      Hunt.Activity.Social,
-      Hunt.Activity.Selfie1,
-      Hunt.Activity.Selfie2,
-      Hunt.Activity.Selfie3,
-      Hunt.Activity.Fun,
-      Hunt.Activity.Hubolution,
-      Hunt.Activity.Supered,
-    ]
+    completion =
+      Enum.map(Hunt.Activity.activity_modules(), fn mod ->
+        completion = %{
+          ids: [],
+          achievement: false,
+          count: 0,
+          activity_count: 0,
+          points: 0
+        }
 
-    completion = Enum.map(mods, fn mod ->
-      completion = %{
-        ids: [],
-        achievement: false,
-        count: 0,
-        activity_count: 0,
-        points: 0
-      }
-
-      {mod, completion}
-    end)
+        {mod, completion}
+      end)
 
     socket =
       socket
       # Do not reassign on change, or it forces an unnecessary update
       |> assign(:active_slide_index, params["feature"] || "0")
-      |> assign(:hunt_mods, mods)
+      |> assign(:hunt_mods, Hunt.Activity.activity_modules())
       |> assign(:completion, completion)
 
-    if connected?(socket) do
+    if connected?(socket) && socket.assigns.flash != %{} do
       Process.send_after(self(), :clear_flash, 5000)
     end
 
@@ -103,13 +98,49 @@ defmodule HuntWeb.HomeLive do
   def handle_event("slide.active", %{"index" => idx}, socket = %{assigns: %{uri: uri}}) do
     socket =
       socket
-      |> push_patch(to: HuntWeb.uri_path(uri, %{"feature" => idx}))
+      |> push_patch(to: HuntWeb.uri_path(uri, %{"feature" => idx}), replace: true)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("submit_answer", params, socket) do
+    now = DateTime.utc_now() |> DateTime.to_unix(:millisecond) |> to_string()
+
+    socket =
+      case Hunt.Activity.submit_answer(params, user: socket.assigns.user) do
+        {:ok, %{approval_state: :approved}} ->
+          put_flash(socket, "info-#{now}", "Boom! Your answer was accepted. The points are yours.")
+
+        {:ok, %{approval_state: :pending}} ->
+          put_flash(socket, "info-#{now}", "Boom! We'll review your answer, but you'll see the points now.")
+
+        {:error, why} when is_binary(why) ->
+          put_flash(socket, "error-#{now}", why)
+
+        {:error, cs = %Ecto.Changeset{}} ->
+          put_flash(socket, "error-#{now}", HuntWeb.CoreComponents.translate_errors(cs))
+      end
+
+    # Process.send_after(self(), {:clear_flash, now}, 5000)
 
     {:noreply, socket}
   end
 
   def handle_info(:clear_flash, socket) do
     {:noreply, clear_flash(socket)}
+  end
+
+  def handle_info({:clear_flash, time}, socket) do
+    socket =
+      Enum.reduce(socket.assigns.flash, socket, fn {k, _v}, socket ->
+        if is_binary(k) and String.contains?(k, time) do
+          clear_flash(socket, k)
+        else
+          socket
+        end
+      end)
+
+    {:noreply, socket}
   end
 
   defp get_hunt(id, hunt_mods) do

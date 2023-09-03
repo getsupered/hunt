@@ -9,9 +9,11 @@ defmodule Hunt.Activity.Schema.CompletedActivity do
     belongs_to :user, Hunt.User.Schema.User
     field :activity_id, Ecto.UUID
 
-    field :approval_state, Ecto.Enum, values: [:pending, :approved, :rejected, :cancelled]
+    field :approval_state, Ecto.Enum, values: [:pending, :approved, :rejected]
     field :approval_updated_at, :utc_datetime_usec
     belongs_to :approval_by, Hunt.User.Schema.User
+
+    field :metadata, :map
 
     timestamps()
   end
@@ -22,12 +24,13 @@ defmodule Hunt.Activity.Schema.CompletedActivity do
       :activity_id,
       :approval_state,
       :approval_updated_at,
-      :approval_by_id
+      :approval_by_id,
+      :metadata
     ]
 
     %__MODULE__{}
     |> cast(attrs, fields)
-    |> validate_required(fields -- [:approval_by_id, :approval_updated_at])
+    |> validate_required(fields -- [:approval_by_id, :approval_updated_at, :metadata])
     |> unique_constraint([:user_id, :activity_id])
   end
 end

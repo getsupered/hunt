@@ -51,6 +51,7 @@ const hooks = {
     },
     destroyed() {
       if (this.splide && !liveSocket.isUnloaded()) {
+        console.log('splide destroy')
         this.splide.destroy()
       }
     }

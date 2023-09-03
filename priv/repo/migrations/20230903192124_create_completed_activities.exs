@@ -11,9 +11,11 @@ defmodule Hunt.Repo.Migrations.CreateCompletedActivities do
       add :approval_updated_at, :utc_datetime_usec
       add :approval_by_id, :binary_id
 
+      add :metadata, :map
+
       timestamps()
     end
 
-    create unique_index(:completed_activities, [:user_id, :activity_id], where: "approval_state != 'cancelled'")
+    create unique_index(:completed_activities, [:user_id, :activity_id])
   end
 end
