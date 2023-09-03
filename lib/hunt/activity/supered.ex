@@ -29,23 +29,30 @@ defmodule Hunt.Activity.Supered do
     %{
       id: "eca91e9f-b6e3-44ac-9e1e-3c14b77236b9",
       title: "Create and Embed a Supered Card in HubSpot",
-      action: "",
+      action: "Level up your HubSpot with embedded processes",
       points: 100,
       component: &__MODULE__.embed_card/1
     },
     %{
       id: "462e51d1-01e7-40d0-b36c-1a258b696a30",
       title: "Create a Supered Process Rule for HubSpot",
-      action: "",
+      action: "Alert your reps to invalid data or processes",
       points: 100,
       component: &__MODULE__.process_rule/1
     },
     %{
       id: "a232e526-ad95-4956-b0dd-b52b3b110fc1",
       title: "Connect Supered and Hubspot",
-      action: "",
+      action: "Supered charge your HubSpot account",
       points: 300,
       component: &__MODULE__.connect_hubspot/1
+    },
+    %{
+      id: "a28153ab-fca1-4bed-a956-7971012987ea",
+      title: "Send us a few sentences on how you'd use Supered",
+      action: "We'd love to hear your thoughts!",
+      points: 200,
+      component: &__MODULE__.use_supered/1
     },
     # %{
     #   id: "d5705849-ec91-4edc-bdd6-99404416afbf",
@@ -189,6 +196,32 @@ defmodule Hunt.Activity.Supered do
         <button class="btn btn-primary btn-big w-full block text-2xl" id="camera-button" phx-hook="CameraButton">
           <.icon name="hero-camera" class="h-8 w-8 mr-2" />
           Upload Screenshot
+        </button>
+      </div>
+    </div>
+    """
+  end
+
+  def use_supered(assigns) do
+    ~H"""
+    <div class="h-full flex flex-col">
+      <div class="flex-grow prose text-xl space-y-4">
+        <h2 class="max-w-[calc(100%-3rem)]"><%= @hunt.title %></h2>
+
+        <div>
+          <span class="font-semibold">Points: </span>
+          <span><%= @hunt.points %>pts</span>
+        </div>
+      </div>
+
+      <div class="pb-8">
+        <div class="mb-4">
+          <label class="font-semibold mb-2 block">Complete: How would you use Supered at your company?</label>
+          <textarea class="w-full form-input" rows="3" placeholder="Give us a few sentences, we're curious!" />
+        </div>
+
+        <button class="btn btn-primary btn-big w-full block text-2xl">
+          Submit Answer
         </button>
       </div>
     </div>
