@@ -1,7 +1,7 @@
 defmodule HuntWeb.AuthController do
   use HuntWeb, :controller
 
-  plug Ueberauth
+  plug HuntWeb.Ueberauth
 
   def delete(conn, _params) do
     conn
