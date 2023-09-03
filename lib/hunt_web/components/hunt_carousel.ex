@@ -9,6 +9,34 @@ defmodule HuntWeb.HuntCarousel do
 
         <div class="splide__track">
           <ul class="splide__list">
+            <li class="splide__slide">
+              <div class="mx-4 mb-8 p-4 rounded-lg bg-white dropped-border overflow-hidden">
+                <div class="prose text-xl">
+                  <h2>Welcome!</h2>
+
+                  <p>The Supered Dupered Challenge is a multi-day scavenger hunt to expand your INBOUND experience.</p>
+                  <p>We'll be giving away prizes to the top performers, so try to complete as many as you can!</p>
+                </div>
+              </div>
+
+              <ul class="mx-4 my-4 space-y-4">
+                <li class="rounded px-4 py-3 dropped-border-sm flex items-start gap-4">
+                  <%= if @user do %>
+                    <div class="flex-grow">
+                      You're logged in as <%= @user.email %>
+                    </div>
+
+                    <div class="flex-none">
+                      <a href="/auth/logout" class="btn btn-muted">Logout</a>
+                    </div>
+                  <% else %>
+                    <a class="btn btn-primary block w-full text-center" href="/auth/google">Login with Google</a>
+                    <button class="btn btn-primary block w-full text-center">Login with Supered</button>
+                  <% end %>
+                </li>
+              </ul>
+            </li>
+
             <li :for={{slide, slide_idx} <- Enum.with_index(@hunt_mods)} class="splide__slide">
               <div class="mx-4 mb-8 rounded-lg bg-white dropped-border overflow-hidden">
                 <img src={slide.image().src} class={"w-full max-h-[30vh] object-cover #{slide.image().class}"} />
@@ -60,7 +88,7 @@ defmodule HuntWeb.HuntCarousel do
 
                 <li :for={act <- slide.activities()}>
                   <.link
-                    patch={~p"/hunt/#{act.id}?feature=#{slide_idx}"}
+                    patch={~p"/hunt/#{act.id}?feature=#{slide_idx+1}"}
                     class="w-full flex items-start gap-4 rounded px-4 py-3 dropped-border-sm touch-manipulation"
                   >
                     <div class="flex-grow flex items-center">

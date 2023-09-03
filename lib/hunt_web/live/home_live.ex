@@ -25,6 +25,7 @@ defmodule HuntWeb.HomeLive do
           <.live_component
             module={HuntWeb.HuntCarousel}
             id="carousel"
+            user={@user}
             active_slide_index={@active_slide_index}
             hunt_mods={@hunt_mods}
             completion={@completion}
@@ -49,7 +50,9 @@ defmodule HuntWeb.HomeLive do
     """
   end
 
-  def mount(params, _session, socket) do
+  def mount(params, session, socket) do
+    socket = HuntWeb.load_user(session, socket)
+
     mods = [
       Hunt.Activity.Lounge,
       Hunt.Activity.Attend,
@@ -81,6 +84,10 @@ defmodule HuntWeb.HomeLive do
       |> assign(:hunt_mods, mods)
       |> assign(:completion, completion)
 
+    if connected?(socket) do
+      Process.send_after(self(), :clear_flash, 5000)
+    end
+
     {:ok, socket}
   end
 
@@ -99,6 +106,10 @@ defmodule HuntWeb.HomeLive do
       |> push_patch(to: HuntWeb.uri_path(uri, %{"feature" => idx}))
 
     {:noreply, socket}
+  end
+
+  def handle_info(:clear_flash, socket) do
+    {:noreply, clear_flash(socket)}
   end
 
   defp get_hunt(id, hunt_mods) do

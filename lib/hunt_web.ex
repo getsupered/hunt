@@ -110,6 +110,14 @@ defmodule HuntWeb do
     apply(__MODULE__, which, [])
   end
 
+  def load_user(%{"current_user" => %{id: user_id}}, socket) do
+    Phoenix.Component.assign(socket, :user, Hunt.User.get_user(user_id))
+  end
+
+  def load_user(_, socket) do
+    Phoenix.Component.assign(socket, :user, nil)
+  end
+
   def uri_path(uri, params) do
     url_params = Map.drop(params, ["path"])
 

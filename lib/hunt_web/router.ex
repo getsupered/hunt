@@ -21,6 +21,15 @@ defmodule HuntWeb.Router do
     live "/hunt/:hunt_id", HomeLive
   end
 
+  scope "/auth", HuntWeb do
+    pipe_through :browser
+
+    get "/logout", AuthController, :delete
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", HuntWeb do
   #   pipe_through :api

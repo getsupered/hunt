@@ -73,3 +73,7 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+for config <- "./secret/dev.exs" |> Path.expand(__DIR__) |> Path.wildcard() do
+  import_config config
+end
