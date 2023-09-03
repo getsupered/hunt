@@ -94,4 +94,15 @@ if config_env() == :prod do
   #       force_ssl: [hsts: true]
   #
   # Check `Plug.SSL` for all available options in `force_ssl`.
+
+  config :ueberauth, Ueberauth,
+    providers: [
+      google: {
+        Ueberauth.Strategy.Google,
+        [
+          client_id: System.get_env("GOOGLE_CLIENT_ID"),
+          client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+        ]
+      }
+    ]
 end
