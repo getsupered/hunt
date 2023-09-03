@@ -14,6 +14,8 @@ defmodule Hunt.Activity.Schema.CompletedActivity do
     belongs_to :approval_by, Hunt.User.Schema.User
 
     field :metadata, :map
+    field :activity_module, :any, virtual: true
+    field :activity_points, :integer, virtual: true, default: 0
 
     timestamps()
   end

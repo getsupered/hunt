@@ -18,8 +18,56 @@ defmodule Hunt.Activity do
     Hunt.Activity.Supered
   ]
 
+  @activities Enum.flat_map(@activity_modules, fn mod ->
+    Enum.map(mod.activities(), & Map.put(&1, :module, mod))
+  end)
+
   def activity_modules, do: @activity_modules
-  def activities, do: Enum.flat_map(@activity_modules, & &1.activities())
+  def activities, do: @activities
+
+  def completion_summary(user: user) do
+    activities = completed_activities(user: user) |> Enum.group_by(& &1.activity_module)
+
+    Enum.map(activity_modules(), fn mod ->
+      mod_activities = Map.get(activities, mod, [])
+      mod_activity_count = length(mod.activities())
+
+      pointed_activities = Enum.filter(mod_activities, & &1.approval_state in [:pending, :approved])
+      pointed_activities_count = length(pointed_activities)
+
+      achievement? = mod_activity_count == pointed_activities_count
+      points = Enum.map(pointed_activities, & &1.activity_points) |> Enum.sum()
+      points = if achievement?, do: mod.achievement().points + points, else: points
+
+      completion = %{
+        ids: Enum.map(mod_activities, & &1.activity_id),
+        achievement: achievement?,
+        count: (if achievement?, do: pointed_activities_count + 1, else: pointed_activities_count),
+        activity_count: pointed_activities_count,
+        points: points
+      }
+
+      {mod, completion}
+    end)
+    |> Map.new()
+  end
+
+  def completed_activities(user: nil), do: []
+
+  def completed_activities(user: user) do
+    from(
+      c in CompletedActivity,
+      where: c.user_id == ^user.id
+    )
+    |> Repo.all()
+    |> Enum.map(fn completion ->
+      case find_activity(completion.activity_id) do
+        nil -> nil
+        act -> %{completion | activity_module: act.module, activity_points: act.points}
+      end
+    end)
+    |> Enum.reject(& is_nil/1)
+  end
 
   def submit_answer(_params, user: nil) do
     {:error, "Must log in first"}
@@ -43,7 +91,7 @@ defmodule Hunt.Activity do
     end
   end
 
-  defp find_activity(id) do
+  def find_activity(id) do
     Enum.find(activities(), &(&1.id == id))
   end
 

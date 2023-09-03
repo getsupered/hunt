@@ -39,25 +39,12 @@ defmodule HuntWeb.HomeLive do
   def mount(params, session, socket) do
     socket = HuntWeb.load_user(session, socket)
 
-    completion =
-      Enum.map(Hunt.Activity.activity_modules(), fn mod ->
-        completion = %{
-          ids: [],
-          achievement: false,
-          count: 0,
-          activity_count: 0,
-          points: 0
-        }
-
-        {mod, completion}
-      end)
-
     socket =
       socket
       # Do not reassign on change, or it forces an unnecessary update
       |> assign(:active_slide_index, params["feature"] || "0")
       |> assign(:hunt_mods, Hunt.Activity.activity_modules())
-      |> assign(:completion, completion)
+      |> load_completion()
 
     if connected?(socket) && socket.assigns.flash != %{} do
       Process.send_after(self(), :clear_flash, 5000)
@@ -66,11 +53,11 @@ defmodule HuntWeb.HomeLive do
     {:ok, socket}
   end
 
-  def handle_params(params, uri, socket = %{assigns: %{hunt_mods: hunt_mods}}) do
+  def handle_params(params, uri, socket) do
     socket =
       socket
       |> assign(:uri, URI.parse(uri))
-      |> assign(:hunt, get_hunt(params["hunt_id"], hunt_mods))
+      |> assign(:hunt, Hunt.Activity.find_activity(params["hunt_id"]))
 
     {:noreply, socket}
   end
@@ -89,19 +76,24 @@ defmodule HuntWeb.HomeLive do
     socket =
       case Hunt.Activity.submit_answer(params, user: socket.assigns.user) do
         {:ok, %{approval_state: :approved}} ->
-          put_flash(socket, "info-#{now}", "Boom! Your answer was accepted. The points are yours.")
+          socket
+          |> load_completion()
+          |> completed_notification()
+          |> push_patch(to: HuntWeb.uri_path(socket.assigns.uri, %{"path" => "/"}), replace: true)
 
         {:ok, %{approval_state: :pending}} ->
-          put_flash(socket, "info-#{now}", "Boom! We'll review your answer, but you'll see the points now.")
+          socket
+          |> load_completion()
+          |> completed_notification()
+          |> push_patch(to: HuntWeb.uri_path(socket.assigns.uri, %{"path" => "/"}), replace: true)
 
         {:error, why} when is_binary(why) ->
-          put_flash(socket, "error-#{now}", why)
+          push_event(socket, "notification", %{type: "error", text: why})
 
         {:error, cs = %Ecto.Changeset{}} ->
-          put_flash(socket, "error-#{now}", HuntWeb.CoreComponents.translate_errors(cs))
+          why = HuntWeb.CoreComponents.translate_errors(cs)
+          push_event(socket, "notification", %{type: "error", text: why})
       end
-
-    Process.send_after(self(), {:clear_flash, now}, 5000)
 
     {:noreply, socket}
   end
@@ -110,22 +102,12 @@ defmodule HuntWeb.HomeLive do
     {:noreply, clear_flash(socket)}
   end
 
-  def handle_info({:clear_flash, time}, socket) do
-    socket =
-      Enum.reduce(socket.assigns.flash, socket, fn {k, _v}, socket ->
-        if is_binary(k) and String.contains?(k, time) do
-          clear_flash(socket, k)
-        else
-          socket
-        end
-      end)
-
-    {:noreply, socket}
+  defp load_completion(socket = %{assigns: %{user: user}}) do
+    assign(socket, :completion, Hunt.Activity.completion_summary(user: user))
   end
 
-  defp get_hunt(id, hunt_mods) do
-    Enum.find_value(hunt_mods, fn hunt_mod ->
-      Enum.find(hunt_mod.activities(), &(&1.id == id))
-    end)
+  defp completed_notification(socket = %{assigns: %{completion: completion}}) do
+    total_points = completion |> Map.values() |> Enum.map(& &1.points) |> Enum.sum()
+    push_event(socket, "notification", %{type: "success", text: "Boom! Your answer was accepted. The points are yours. You have #{total_points} points."})
   end
 end
