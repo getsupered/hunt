@@ -22,6 +22,10 @@
   font-named-instance: 'Italic';
 }
 
+html {
+  font-size: 15px;
+}
+
 @layer utilities {
   .dropped-border {
   @apply border-2 border-[#222];
