@@ -28,21 +28,21 @@ defmodule Hunt.Activity.Supered do
   @activities [
     %{
       id: "eca91e9f-b6e3-44ac-9e1e-3c14b77236b9",
-      title: "Create and Embed a Card in HubSpot",
+      title: "Create and Embed a Supered Card in HubSpot",
       action: "",
       points: 100,
       component: &__MODULE__.embed_card/1
     },
     %{
       id: "462e51d1-01e7-40d0-b36c-1a258b696a30",
-      title: "Create a Process Rule in HubSpot",
+      title: "Create a Supered Process Rule for HubSpot",
       action: "",
       points: 100,
       component: &__MODULE__.process_rule/1
     },
     %{
       id: "a232e526-ad95-4956-b0dd-b52b3b110fc1",
-      title: "Connect Supered & Hubspot",
+      title: "Connect Supered and Hubspot",
       action: "",
       points: 300,
       component: &__MODULE__.connect_hubspot/1
