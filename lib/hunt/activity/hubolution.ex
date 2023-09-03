@@ -53,15 +53,7 @@ defmodule Hunt.Activity.Hubolution do
       action: "You'll have a bunch of fun, so share it with the world",
       points: 300,
       component: &__MODULE__.afterparty_pic/1
-    },
-    %{
-      # https://www.eventbrite.com/e/hubolution-after-party-tickets-691845738227
-      id: "f9f1f4de-cc67-46e6-997d-0570296cddbf",
-      title: "Attend Hubolution Party",
-      action: "Click for location",
-      points: 250,
-      component: &__MODULE__.attend_party/1
-    },
+    }
   ]
   |> Enum.sort_by(& &1.title)
 
@@ -186,49 +178,6 @@ defmodule Hunt.Activity.Hubolution do
         <button class="btn btn-primary btn-big w-full block text-2xl" id="camera-button" phx-hook="CameraButton">
           <.icon name="hero-camera" class="h-8 w-8 mr-2" />
           Upload Selfie
-        </button>
-      </div>
-    </div>
-    """
-  end
-
-  def attend_party(assigns) do
-    ~H"""
-    <div class="h-full flex flex-col">
-      <div class="flex-grow prose text-xl space-y-4">
-        <h2 class="max-w-[calc(100%-3rem)]"><%= @hunt.title %></h2>
-
-        <div>
-          <a href="https://www.eventbrite.com/e/hubolution-after-party-tickets-691845738227" target="_blank" class="btn btn-muted text-xl">
-            Register
-          </a>
-        </div>
-
-        <div>
-          <span class="font-semibold">Location: </span>
-          <span>Westin Pavilion, by Lawn on D</span>
-        </div>
-
-        <div>
-          <span class="font-semibold">Time: </span>
-          <span>Thursday 5:30PM – 8:30PM</span>
-        </div>
-
-        <div>
-          <span class="font-semibold">Complete: </span>
-          <span>Scan QR code at party</span>
-        </div>
-
-        <div>
-          <span class="font-semibold">Points: </span>
-          <span><%= @hunt.points %>pts</span>
-        </div>
-      </div>
-
-      <div class="pb-8">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" />
-          Scan QR Code
         </button>
       </div>
     </div>
