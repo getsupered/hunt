@@ -8,12 +8,12 @@ defmodule HuntWeb.HomeLive do
         <div class="bg-pink-600 pb-40 sm:rounded-t-lg">
           <header class="px-6 py-8">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div class="flex items-center gap-8">
+              <div class="flex items-center gap-6">
                 <.link patch={~p"/"}>
                   <img src={~p"/images/supered_white.svg"} class="w-24" />
                 </.link>
 
-                <h1 class="text-white text-2xl font-black flex-grow text-right">
+                <h1 class="text-white text-3xl font-black flex-grow text-right tracking-tight leading-8">
                   Supered Dupered<br />Challenge
                 </h1>
               </div>
@@ -55,7 +55,9 @@ defmodule HuntWeb.HomeLive do
       Hunt.Activity.Attend,
       Hunt.Activity.Selfie1,
       Hunt.Activity.Selfie2,
-      Hunt.Activity.Selfie3
+      Hunt.Activity.Selfie3,
+      Hunt.Activity.Fun,
+      Hunt.Activity.Hubolution
     ]
 
     completion = Enum.map(mods, fn mod ->

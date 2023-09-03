@@ -13,16 +13,17 @@ defmodule HuntWeb.HuntCarousel do
               <div class="mx-4 mb-8 rounded-lg bg-white dropped-border overflow-hidden">
                 <img src={slide.image().src} class={"w-full max-h-[30vh] object-cover #{slide.image().class}"} />
                 <div class="px-3 py-2">
-                  <div class="flex items-baseline">
-                    <h2 class="font-semibold flex-grow"><%= slide.title() %></h2>
-                    <div class="text-right">
-                      <div class="text-sm font-light">
-                        <%= @completion[slide].points %> / <%= slide.total_points() %> pts
-                      </div>
+                  <div>
+                    <h2 class="font-semibold text-2xl"><%= slide.title() %></h2>
+                  </div>
 
-                      <div class="text-sm font-light">
-                        <%= @completion[slide].count %> / <%= length(slide.activities()) + 1 %> completed
-                      </div>
+                  <div class="mt-2 flex items-center font-light">
+                    <div>
+                      <%= @completion[slide].count %> / <%= length(slide.activities()) + 1 %> completed
+                    </div>
+
+                    <div class="flex-grow text-right">
+                      <%= @completion[slide].points %> / <%= slide.total_points() %> pts
                     </div>
                   </div>
                 </div>
@@ -58,7 +59,10 @@ defmodule HuntWeb.HuntCarousel do
                 </li>
 
                 <li :for={act <- slide.activities()}>
-                  <.link patch={~p"/hunt/#{act.id}?feature=#{slide_idx}"} class="w-full flex items-start rounded px-4 py-3 dropped-border-sm touch-manipulation">
+                  <.link
+                    patch={~p"/hunt/#{act.id}?feature=#{slide_idx}"}
+                    class="w-full flex items-start gap-4 rounded px-4 py-3 dropped-border-sm touch-manipulation"
+                  >
                     <div class="flex-grow flex items-center">
                       <%= if act.id in @completion[slide].ids do %>
                         <div class="rounded-full flex-none bg-pink-50 h-12 w-12 flex items-center justify-center mr-4">
