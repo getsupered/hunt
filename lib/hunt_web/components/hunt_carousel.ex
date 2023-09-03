@@ -88,7 +88,7 @@ defmodule HuntWeb.HuntCarousel do
 
                 <li :for={act <- slide.activities()}>
                   <.link
-                    patch={~p"/hunt/#{act.id}?feature=#{slide_idx+1}"}
+                    patch={~p"/hunt/#{act.id}?feature=#{slide_idx + 1}"}
                     class="w-full flex items-start gap-4 rounded px-4 py-3 dropped-border-sm touch-manipulation"
                   >
                     <div class="flex-grow flex items-center">

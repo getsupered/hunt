@@ -21,37 +21,37 @@ defmodule Hunt.Activity.Selfie1 do
   def achievement do
     %{
       title: "Achievement: Three Hubeteers",
-      points: 500,
+      points: 500
     }
   end
 
   @activities [
-    %{
-      id: "8c7e361f-a8c1-486f-9017-647a1bb785c3",
-      title: "Selfie with Brian Halligan",
-      action: "Co-Founder at HubSpot",
-      points: 100,
-      component: &__MODULE__.selfie/1,
-      linkedin: "https://www.linkedin.com/in/brianhalligan/"
-    },
-    %{
-      id: "2c62226d-2513-4fee-b8fd-625107300ccb",
-      title: "Selfie with Dharmesh Shah",
-      action: "Founder and CTO at HubSpot",
-      points: 100,
-      component: &__MODULE__.selfie/1,
-      linkedin: "https://www.linkedin.com/in/dharmesh/"
-    },
-    %{
-      id: "43663b50-612f-4f01-b93e-199304db5993",
-      title: "Selfie with Yamini Rangan",
-      action: "CEO of HubSpot",
-      points: 100,
-      component: &__MODULE__.selfie/1,
-      linkedin: "https://www.linkedin.com/in/yaminirangan/"
-    }
-  ]
-  |> Enum.sort_by(& &1.title)
+                %{
+                  id: "8c7e361f-a8c1-486f-9017-647a1bb785c3",
+                  title: "Selfie with Brian Halligan",
+                  action: "Co-Founder at HubSpot",
+                  points: 100,
+                  component: &__MODULE__.selfie/1,
+                  linkedin: "https://www.linkedin.com/in/brianhalligan/"
+                },
+                %{
+                  id: "2c62226d-2513-4fee-b8fd-625107300ccb",
+                  title: "Selfie with Dharmesh Shah",
+                  action: "Founder and CTO at HubSpot",
+                  points: 100,
+                  component: &__MODULE__.selfie/1,
+                  linkedin: "https://www.linkedin.com/in/dharmesh/"
+                },
+                %{
+                  id: "43663b50-612f-4f01-b93e-199304db5993",
+                  title: "Selfie with Yamini Rangan",
+                  action: "CEO of HubSpot",
+                  points: 100,
+                  component: &__MODULE__.selfie/1,
+                  linkedin: "https://www.linkedin.com/in/yaminirangan/"
+                }
+              ]
+              |> Enum.sort_by(& &1.title)
 
   def activities, do: @activities
 
@@ -83,8 +83,7 @@ defmodule Hunt.Activity.Selfie1 do
 
       <div class="pb-8">
         <button class="btn btn-primary btn-big w-full block text-2xl" id="camera-button" phx-hook="CameraButton">
-          <.icon name="hero-camera" class="h-8 w-8 mr-2" />
-          Upload Selfie
+          <.icon name="hero-camera" class="h-8 w-8 mr-2" /> Upload Selfie
         </button>
       </div>
     </div>

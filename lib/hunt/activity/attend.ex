@@ -21,41 +21,41 @@ defmodule Hunt.Activity.Attend do
   def achievement do
     %{
       title: "Achievement: Attendee Supered Star",
-      points: 1000,
+      points: 1000
     }
   end
 
   @activities [
-    %{
-      id: "4ed0fe52-abc4-4386-8dcc-838a4820bfe4",
-      title: "10k Pitch Attendee",
-      action: "Click for location",
-      points: 150,
-      component: &__MODULE__.ten_k_pitch/1
-    },
-    %{
-      id: "bf31f5d1-8247-4414-be8b-9084400e2a08",
-      title: "HUG Attendee: HubSpot Admins",
-      action: "Click for location",
-      points: 150,
-      component: &__MODULE__.hug_admin/1
-    },
-    %{
-      id: "59180db0-0161-4b4c-ad53-170fbe309ae8",
-      title: "Session: Supered Adoption Framework",
-      action: "Click for location",
-      points: 150,
-      component: &__MODULE__.adoption/1
-    },
-    %{
-      id: "f9f1f4de-cc67-46e6-997d-0570296cddbf",
-      title: "Attend Hubolution Party",
-      action: "Click for location",
-      points: 250,
-      component: &__MODULE__.attend_party/1
-    }
-  ]
-  |> Enum.sort_by(& &1.title)
+                %{
+                  id: "4ed0fe52-abc4-4386-8dcc-838a4820bfe4",
+                  title: "10k Pitch Attendee",
+                  action: "Click for location",
+                  points: 150,
+                  component: &__MODULE__.ten_k_pitch/1
+                },
+                %{
+                  id: "bf31f5d1-8247-4414-be8b-9084400e2a08",
+                  title: "HUG Attendee: HubSpot Admins",
+                  action: "Click for location",
+                  points: 150,
+                  component: &__MODULE__.hug_admin/1
+                },
+                %{
+                  id: "59180db0-0161-4b4c-ad53-170fbe309ae8",
+                  title: "Session: Supered Adoption Framework",
+                  action: "Click for location",
+                  points: 150,
+                  component: &__MODULE__.adoption/1
+                },
+                %{
+                  id: "f9f1f4de-cc67-46e6-997d-0570296cddbf",
+                  title: "Attend Hubolution Party",
+                  action: "Click for location",
+                  points: 250,
+                  component: &__MODULE__.attend_party/1
+                }
+              ]
+              |> Enum.sort_by(& &1.title)
 
   def activities, do: @activities
 
@@ -92,8 +92,7 @@ defmodule Hunt.Activity.Attend do
 
       <div class="pb-8">
         <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" />
-          Scan QR Code
+          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
         </button>
       </div>
     </div>
@@ -133,8 +132,7 @@ defmodule Hunt.Activity.Attend do
 
       <div class="pb-8">
         <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" />
-          Scan QR Code
+          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
         </button>
       </div>
     </div>
@@ -148,7 +146,13 @@ defmodule Hunt.Activity.Attend do
         <h2 class="max-w-[calc(100%-3rem)]"><%= @hunt.title %></h2>
 
         <div>
-          <a href="https://events.hubspot.com/events/details/hubspot-hubspot-admins-presents-inbound23-hug-meet-up/" target="_blank" class="btn btn-muted text-xl">Event Page</a>
+          <a
+            href="https://events.hubspot.com/events/details/hubspot-hubspot-admins-presents-inbound23-hug-meet-up/"
+            target="_blank"
+            class="btn btn-muted text-xl"
+          >
+            Event Page
+          </a>
         </div>
 
         <div>
@@ -174,8 +178,7 @@ defmodule Hunt.Activity.Attend do
 
       <div class="pb-8">
         <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" />
-          Scan QR Code
+          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
         </button>
       </div>
     </div>
@@ -217,8 +220,7 @@ defmodule Hunt.Activity.Attend do
 
       <div class="pb-8">
         <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" />
-          Scan QR Code
+          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
         </button>
       </div>
     </div>

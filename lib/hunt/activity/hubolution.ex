@@ -21,41 +21,41 @@ defmodule Hunt.Activity.Hubolution do
   def achievement do
     %{
       title: "Achievement: Hubolutionary",
-      points: 750,
+      points: 750
     }
   end
 
   @activities [
-    %{
-      id: "ec97f1af-c366-4ef3-9895-cd942213693e",
-      title: "Join Sprocketeer Discord",
-      action: "Over 1500 HubSpot enthusiasts in one place!",
-      points: 100,
-      component: &__MODULE__.discord/1
-    },
-    %{
-      id: "a9882a9b-c2be-419b-9a2f-01841900d39b",
-      title: "Use a photo booth at Hubolution Party",
-      action: "Big cheesin' at the afterparty",
-      points: 150,
-      component: &__MODULE__.photo_booth/1
-    },
-    %{
-      id: "fc3e481f-2b13-4dc7-8ac0-9cd2a32cd27a",
-      title: "Get interviewed by \"The Mayor of INBOUND\"",
-      action: "Tall guy, orange suit, loves HubSpot",
-      points: 300,
-      component: &__MODULE__.mayor/1
-    },
-    %{
-      id: "96205e49-81ff-420d-bd99-c2002db9b094",
-      title: "Post Hubolution Party pic with #hubolution",
-      action: "You'll have a bunch of fun, so share it with the world",
-      points: 300,
-      component: &__MODULE__.afterparty_pic/1
-    }
-  ]
-  |> Enum.sort_by(& &1.title)
+                %{
+                  id: "ec97f1af-c366-4ef3-9895-cd942213693e",
+                  title: "Join Sprocketeer Discord",
+                  action: "Over 1500 HubSpot enthusiasts in one place!",
+                  points: 100,
+                  component: &__MODULE__.discord/1
+                },
+                %{
+                  id: "a9882a9b-c2be-419b-9a2f-01841900d39b",
+                  title: "Use a photo booth at Hubolution Party",
+                  action: "Big cheesin' at the afterparty",
+                  points: 150,
+                  component: &__MODULE__.photo_booth/1
+                },
+                %{
+                  id: "fc3e481f-2b13-4dc7-8ac0-9cd2a32cd27a",
+                  title: "Get interviewed by \"The Mayor of INBOUND\"",
+                  action: "Tall guy, orange suit, loves HubSpot",
+                  points: 300,
+                  component: &__MODULE__.mayor/1
+                },
+                %{
+                  id: "96205e49-81ff-420d-bd99-c2002db9b094",
+                  title: "Post Hubolution Party pic with #hubolution",
+                  action: "You'll have a bunch of fun, so share it with the world",
+                  points: 300,
+                  component: &__MODULE__.afterparty_pic/1
+                }
+              ]
+              |> Enum.sort_by(& &1.title)
 
   def activities, do: @activities
 
@@ -87,8 +87,7 @@ defmodule Hunt.Activity.Hubolution do
 
       <div class="pb-8">
         <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" />
-          Scan QR Code
+          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
         </button>
       </div>
     </div>
@@ -144,8 +143,7 @@ defmodule Hunt.Activity.Hubolution do
 
       <div class="pb-8">
         <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" />
-          Scan QR Code
+          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
         </button>
       </div>
     </div>
@@ -176,8 +174,7 @@ defmodule Hunt.Activity.Hubolution do
 
       <div class="pb-8">
         <button class="btn btn-primary btn-big w-full block text-2xl" id="camera-button" phx-hook="CameraButton">
-          <.icon name="hero-camera" class="h-8 w-8 mr-2" />
-          Upload Selfie
+          <.icon name="hero-camera" class="h-8 w-8 mr-2" /> Upload Selfie
         </button>
       </div>
     </div>
@@ -219,8 +216,7 @@ defmodule Hunt.Activity.Hubolution do
 
       <div class="pb-8">
         <button class="btn btn-primary btn-big w-full block text-2xl" id="camera-button" phx-hook="CameraButton">
-          <.icon name="hero-camera" class="h-8 w-8 mr-2" />
-          Upload Screenshot
+          <.icon name="hero-camera" class="h-8 w-8 mr-2" /> Upload Screenshot
         </button>
       </div>
     </div>

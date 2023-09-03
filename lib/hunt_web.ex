@@ -128,10 +128,11 @@ defmodule HuntWeb do
       |> Map.new()
       |> Plug.Conn.Query.encode()
 
-    new_uri = Map.merge(uri, %{
-      query: presence(query),
-      path: params["path"] || uri.path
-    })
+    new_uri =
+      Map.merge(uri, %{
+        query: presence(query),
+        path: params["path"] || uri.path
+      })
 
     %{new_uri | scheme: nil, authority: nil, host: nil} |> URI.to_string()
   end

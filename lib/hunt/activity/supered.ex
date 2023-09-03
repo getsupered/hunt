@@ -21,48 +21,52 @@ defmodule Hunt.Activity.Supered do
   def achievement do
     %{
       title: "Achievement: Supered Admin",
-      points: 1500,
+      points: 1500
     }
   end
 
   @activities [
-    %{
-      id: "eca91e9f-b6e3-44ac-9e1e-3c14b77236b9",
-      title: "Create and Embed a Supered Card in HubSpot",
-      action: "Level up your HubSpot with embedded processes",
-      points: 100,
-      component: &__MODULE__.embed_card/1
-    },
-    %{
-      id: "462e51d1-01e7-40d0-b36c-1a258b696a30",
-      title: "Create a Supered Process Rule for HubSpot",
-      action: "Alert your reps to invalid data or processes",
-      points: 100,
-      component: &__MODULE__.process_rule/1
-    },
-    %{
-      id: "a232e526-ad95-4956-b0dd-b52b3b110fc1",
-      title: "Connect Supered and Hubspot",
-      action: "Supered charge your HubSpot account",
-      points: 300,
-      component: &__MODULE__.connect_hubspot/1
-    },
-    %{
-      id: "a28153ab-fca1-4bed-a956-7971012987ea",
-      title: "Send us a few sentences on how you'd use Supered",
-      action: "We'd love to hear your thoughts!",
-      points: 200,
-      component: &__MODULE__.use_supered/1
-    },
-    # %{
-    #   id: "d5705849-ec91-4edc-bdd6-99404416afbf",
-    #   title: "Create and Post How-To Video",
-    #   action: "",
-    #   points: 300,
-    #   component: &__MODULE__.post_video/1
-    # },
-  ]
-  |> Enum.sort_by(& &1.title)
+                %{
+                  id: "eca91e9f-b6e3-44ac-9e1e-3c14b77236b9",
+                  title: "2. Create and Embed a Supered Card in HubSpot",
+                  action: "Level up your HubSpot with embedded processes",
+                  points: 100,
+                  component: &__MODULE__.embed_card/1,
+                  completion: Hunt.Activity.Completion.Answer.expected("View in Sidebar")
+                },
+                %{
+                  id: "462e51d1-01e7-40d0-b36c-1a258b696a30",
+                  title: "3. Create a Supered Process Rule for HubSpot",
+                  action: "Alert your reps to invalid data or processes",
+                  points: 100,
+                  component: &__MODULE__.process_rule/1,
+                  completion: Hunt.Activity.Completion.Answer.expected("Logic")
+                },
+                %{
+                  id: "a232e526-ad95-4956-b0dd-b52b3b110fc1",
+                  title: "1. Connect Supered and Hubspot",
+                  action: "Supered charge your HubSpot account",
+                  points: 300,
+                  component: &__MODULE__.connect_hubspot/1,
+                  completion: Hunt.Activity.Completion.Answer.expected("Sync Fields")
+                },
+                %{
+                  id: "a28153ab-fca1-4bed-a956-7971012987ea",
+                  title: "4. Send us a few sentences on how you'd use Supered",
+                  action: "We'd love to hear your thoughts!",
+                  points: 200,
+                  component: &__MODULE__.use_supered/1,
+                  completion: Hunt.Activity.Completion.Answer.expected(:any)
+                }
+                # %{
+                #   id: "d5705849-ec91-4edc-bdd6-99404416afbf",
+                #   title: "Create and Post How-To Video",
+                #   action: "",
+                #   points: 300,
+                #   component: &__MODULE__.post_video/1
+                # },
+              ]
+              |> Enum.sort_by(& &1.title)
 
   def activities, do: @activities
 
@@ -82,16 +86,19 @@ defmodule Hunt.Activity.Supered do
         </div>
       </div>
 
-      <div class="pb-8">
+      <.form for={nil} class="pb-8" phx-submit="submit_answer">
+        <input type="hidden" name="activity_id" value={@hunt.id} />
         <div class="mb-4">
-          <label class="font-semibold mb-2 block">Complete: What phrase is shown at the bottom of an embedded card?</label>
-          <input type="text" placeholder="Hint: ViS" class="w-full form-input" />
+          <label class="font-semibold mb-2 block">
+            Complete: What phrase is shown at the bottom of an embedded card?
+          </label>
+          <input required name="answer" type="text" placeholder="Hint: ViS" class="w-full form-input" />
         </div>
 
         <button class="btn btn-primary btn-big w-full block text-2xl">
           Submit Answer
         </button>
-      </div>
+      </.form>
     </div>
     """
   end
@@ -112,16 +119,19 @@ defmodule Hunt.Activity.Supered do
         </div>
       </div>
 
-      <div class="pb-8">
+      <.form for={nil} class="pb-8" phx-submit="submit_answer">
+        <input type="hidden" name="activity_id" value={@hunt.id} />
         <div class="mb-4">
-          <label class="font-semibold mb-2 block">Complete: What is the third tab in "Build Rule"?</label>
-          <input type="text" placeholder="Hint: L" class="w-full form-input" />
+          <label class="font-semibold mb-2 block">
+            Complete: What is the third tab in "Build Rule"?
+          </label>
+          <input required name="answer" type="text" placeholder="Hint: L" class="w-full form-input" />
         </div>
 
         <button class="btn btn-primary btn-big w-full block text-2xl">
           Submit Answer
         </button>
-      </div>
+      </.form>
     </div>
     """
   end
@@ -142,16 +152,19 @@ defmodule Hunt.Activity.Supered do
         </div>
       </div>
 
-      <div class="pb-8">
+      <.form for={nil} class="pb-8" phx-submit="submit_answer">
+        <input type="hidden" name="activity_id" value={@hunt.id} />
         <div class="mb-4">
-          <label class="font-semibold mb-2 block">Complete: After connecting to HubSpot, what does the top button of "Data Dictionary" say?</label>
-          <input type="text" placeholder="Hint: SF" class="w-full form-input" />
+          <label class="font-semibold mb-2 block">
+            Complete: After connecting to HubSpot, what does the top button of "Data Dictionary" say?
+          </label>
+          <input required name="answer" type="text" placeholder="Hint: SF" class="w-full form-input" />
         </div>
 
         <button class="btn btn-primary btn-big w-full block text-2xl">
           Submit Answer
         </button>
-      </div>
+      </.form>
     </div>
     """
   end
@@ -194,8 +207,7 @@ defmodule Hunt.Activity.Supered do
 
       <div class="pb-8 mt-4">
         <button class="btn btn-primary btn-big w-full block text-2xl" id="camera-button" phx-hook="CameraButton">
-          <.icon name="hero-camera" class="h-8 w-8 mr-2" />
-          Upload Screenshot
+          <.icon name="hero-camera" class="h-8 w-8 mr-2" /> Upload Screenshot
         </button>
       </div>
     </div>
@@ -214,16 +226,19 @@ defmodule Hunt.Activity.Supered do
         </div>
       </div>
 
-      <div class="pb-8">
+      <.form for={nil} class="pb-8" phx-submit="submit_answer">
+        <input type="hidden" name="activity_id" value={@hunt.id} />
         <div class="mb-4">
-          <label class="font-semibold mb-2 block">Complete: How would you use Supered at your company?</label>
-          <textarea class="w-full form-input" rows="3" placeholder="Give us a few sentences, we're curious!" />
+          <label class="font-semibold mb-2 block">
+            Complete: How would you use Supered at your company?
+          </label>
+          <textarea required name="answer" class="w-full form-input" rows="3" placeholder="Give us a few sentences, we're curious!" />
         </div>
 
         <button class="btn btn-primary btn-big w-full block text-2xl">
           Submit Answer
         </button>
-      </div>
+      </.form>
     </div>
     """
   end

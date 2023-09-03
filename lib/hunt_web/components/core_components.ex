@@ -99,7 +99,8 @@ defmodule HuntWeb.CoreComponents do
   attr :id, :string, default: "flash", doc: "the optional id of flash container"
   attr :flash, :map, default: %{}, doc: "the map of flash messages to display"
   attr :title, :string, default: nil
-  attr :kind, :atom, values: [:info, :error], doc: "used for styling and flash lookup"
+  attr :kind, :string, doc: "used for styling"
+  attr :flash_id, :string, doc: "used for flash lookup"
   attr :rest, :global, doc: "the arbitrary HTML attributes to add to the flash container"
 
   slot :inner_block, doc: "the optional inner block that renders the flash message"
@@ -107,20 +108,20 @@ defmodule HuntWeb.CoreComponents do
   def flash(assigns) do
     ~H"""
     <div
-      :if={msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)}
+      :if={msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @flash_id)}
       id={@id}
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
       role="alert"
       class={[
         "fixed top-2 right-2 w-80 sm:w-96 z-50 rounded-lg p-3 ring-1",
-        @kind == :info && "bg-emerald-50 text-emerald-800 ring-emerald-500 fill-cyan-900",
-        @kind == :error && "bg-rose-50 text-rose-900 shadow-md ring-rose-500 fill-rose-900"
+        @kind == "info" && "bg-emerald-50 text-emerald-800 ring-emerald-500 fill-cyan-900",
+        @kind == "error" && "bg-rose-50 text-rose-900 shadow-md ring-rose-500 fill-rose-900"
       ]}
       {@rest}
     >
       <p :if={@title} class="flex items-center gap-1.5 text-sm font-semibold leading-6">
-        <.icon :if={@kind == :info} name="hero-information-circle-mini" class="h-4 w-4" />
-        <.icon :if={@kind == :error} name="hero-exclamation-circle-mini" class="h-4 w-4" />
+        <.icon :if={@kind == "info"} name="hero-information-circle-mini" class="h-4 w-4" />
+        <.icon :if={@kind == "error"} name="hero-exclamation-circle-mini" class="h-4 w-4" />
         <%= @title %>
       </p>
       <p class="mt-2 text-sm leading-5"><%= msg %></p>
@@ -142,12 +143,17 @@ defmodule HuntWeb.CoreComponents do
 
   def flash_group(assigns) do
     ~H"""
-    <.flash kind={:info} title="Success!" flash={@flash} />
-    <.flash kind={:error} title="Error!" flash={@flash} />
+    <.flash kind="info" flash_id="info" title="Success!" flash={@flash} />
+    <.flash kind="error" flash_id="error" title="Error!" flash={@flash} />
+
+    <%= for {k, _v} <- @flash, String.contains?(k, "error-") do %>
+      <.flash kind="error" id={k} flash_id={k} title="Error!" flash={@flash} />
+    <% end %>
+
     <.flash
       id="client-error"
-      kind={:error}
-      title="We can't find the internet"
+      kind="error"
+      title="We can't find the internet. You know how conference Wi-Fi is..."
       phx-disconnected={show(".phx-client-error #client-error")}
       phx-connected={hide("#client-error")}
       hidden
@@ -157,14 +163,13 @@ defmodule HuntWeb.CoreComponents do
 
     <.flash
       id="server-error"
-      kind={:error}
+      kind="error"
       title="Something went wrong!"
       phx-disconnected={show(".phx-server-error #server-error")}
       phx-connected={hide("#server-error")}
       hidden
     >
-      Hang in there while we get back on track
-      <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" />
+      Hang in there while we get back on track <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" />
     </.flash>
     """
   end
@@ -270,8 +275,7 @@ defmodule HuntWeb.CoreComponents do
     values: ~w(checkbox color date datetime-local email file hidden month number password
                range radio search select tel text textarea time url week)
 
-  attr :field, Phoenix.HTML.FormField,
-    doc: "a form field struct retrieved from the form, for example: @form[:email]"
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct retrieved from the form, for example: @form[:email]"
 
   attr :errors, :list, default: []
   attr :checked, :boolean, doc: "the checked flag for checkbox inputs"
@@ -279,8 +283,7 @@ defmodule HuntWeb.CoreComponents do
   attr :options, :list, doc: "the options to pass to Phoenix.HTML.Form.options_for_select/2"
   attr :multiple, :boolean, default: false, doc: "the multiple flag for select inputs"
 
-  attr :rest, :global,
-    include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
+  attr :rest, :global, include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
                 multiple pattern placeholder readonly required rows size step)
 
   slot :inner_block
@@ -295,8 +298,7 @@ defmodule HuntWeb.CoreComponents do
   end
 
   def input(%{type: "checkbox", value: value} = assigns) do
-    assigns =
-      assign_new(assigns, :checked, fn -> Phoenix.HTML.Form.normalize_value("checkbox", value) end)
+    assigns = assign_new(assigns, :checked, fn -> Phoenix.HTML.Form.normalize_value("checkbox", value) end)
 
     ~H"""
     <div phx-feedback-for={@name}>
@@ -494,10 +496,7 @@ defmodule HuntWeb.CoreComponents do
             <td :if={@action != []} class="relative w-14 p-0">
               <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
                 <span class="absolute -inset-y-px -right-4 left-0 group-hover:bg-zinc-50 sm:rounded-r-xl" />
-                <span
-                  :for={action <- @action}
-                  class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
-                >
+                <span :for={action <- @action} class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
                   <%= render_slot(action, @row_item.(row)) %>
                 </span>
               </div>
@@ -549,10 +548,7 @@ defmodule HuntWeb.CoreComponents do
   def back(assigns) do
     ~H"""
     <div class="mt-16">
-      <.link
-        navigate={@navigate}
-        class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
-      >
+      <.link navigate={@navigate} class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
         <.icon name="hero-arrow-left-solid" class="h-3 w-3" />
         <%= render_slot(@inner_block) %>
       </.link>
@@ -593,8 +589,7 @@ defmodule HuntWeb.CoreComponents do
     JS.show(js,
       to: selector,
       transition:
-        {"transition-all transform ease-out duration-300",
-         "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95",
+        {"transition-all transform ease-out duration-300", "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95",
          "opacity-100 translate-y-0 sm:scale-100"}
     )
   end
@@ -604,8 +599,7 @@ defmodule HuntWeb.CoreComponents do
       to: selector,
       time: 200,
       transition:
-        {"transition-all transform ease-in duration-200",
-         "opacity-100 translate-y-0 sm:scale-100",
+        {"transition-all transform ease-in duration-200", "opacity-100 translate-y-0 sm:scale-100",
          "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"}
     )
   end
@@ -657,5 +651,35 @@ defmodule HuntWeb.CoreComponents do
   """
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
+  end
+
+  def translate_errors(cs = %Ecto.Changeset{}) do
+    nested_error_map =
+      Ecto.Changeset.traverse_errors(cs, fn {err, _opts} ->
+        err
+      end)
+
+    # Error map might look like: %{a: ["an error"], b: %{c: ["nested errors"]}}
+    # Unroll it to a flat list
+    traverse_error_map(nested_error_map, [], [])
+    |> Enum.join(", ")
+  end
+
+  defp traverse_error_map(map = %{}, acc, keys) do
+    Enum.reduce(map, acc, fn
+      {k, errs}, acc when is_list(errs) ->
+        field_name =
+          [k | keys]
+          |> Enum.reverse()
+          |> Enum.join(" ")
+          |> Phoenix.Naming.humanize()
+
+        Enum.reduce(errs, acc, fn err, acc ->
+          ["#{field_name} #{err}" | acc]
+        end)
+
+      {k, nested = %{}}, acc ->
+        traverse_error_map(nested, acc, [k | keys])
+    end)
   end
 end
