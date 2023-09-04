@@ -5,8 +5,8 @@ defmodule Hunt.Activity.Leaderboard do
   alias Hunt.Repo
 
   @initial_score_by_user %{
-    completed_ids: MapSet.new(),
     achievements: [],
+    completed_ids: MapSet.new(),
     points: 0
   }
 
@@ -15,12 +15,38 @@ defmodule Hunt.Activity.Leaderboard do
     GenServer.start_link(__MODULE__, [], name: name)
   end
 
+  def update_user(summary, user_id, server \\ __MODULE__) do
+    GenServer.call(server, {:update_user, summary, user_id})
+  end
+
   def init(_opts) do
     {:ok, %{scores_by_user: %{}}, {:continue, :load_initial}}
   end
 
   def handle_continue(:load_initial, state) do
     {:noreply, load_pointed_completions(state)}
+  end
+
+  def handle_call({:update_user, summary, user_id}, _from, state) do
+    completed_ids = Map.values(summary) |> Enum.flat_map(& &1.ids)
+
+    achievements =
+      summary
+      |> Enum.map(fn {mod, %{achievement: achieved?}} ->
+        if achieved?, do: mod.achievement()
+      end)
+      |> Enum.reject(&is_nil/1)
+
+    new_score = %{
+      achievements: achievements,
+      completed_ids: MapSet.new(completed_ids),
+      points: Hunt.Activity.total_points(summary)
+    }
+
+    new_scores_by_user = Map.put(state.scores_by_user, user_id, new_score)
+    state = %{state | scores_by_user: new_scores_by_user}
+
+    {:reply, :ok, state}
   end
 
   defp load_pointed_completions(state) do
@@ -70,13 +96,18 @@ defmodule Hunt.Activity.Leaderboard do
       Map.new(state.scores_by_user, fn {user_id, user_score} ->
         achievements =
           achievements
-          |> Enum.filter(fn {required_ids, achievement} ->
+          |> Enum.filter(fn {required_ids, _achievement} ->
             MapSet.intersection(required_ids, user_score.completed_ids) == required_ids
           end)
           |> Enum.map(&elem(&1, 1))
 
         ach_points = achievements |> Enum.map(& &1.points) |> Enum.sum()
-        user_score = %{user_score | achievements: achievements, points: user_score.points + ach_points}
+
+        user_score = %{
+          user_score
+          | achievements: achievements,
+            points: user_score.points + ach_points
+        }
 
         {user_id, user_score}
       end)
