@@ -23,14 +23,21 @@ defmodule HuntWeb.ImageUploaderForm do
     {:noreply, socket}
   end
 
-  def handle_event("save", _params, socket) do
+  def handle_event("save", _params, socket = %{assigns: %{user: user}}) do
     uploaded_files =
       consume_uploaded_entries(socket, :image, fn %{path: path}, entry ->
-        dest = Path.join([:code.priv_dir(:hunt), "static", "uploads", Path.basename(path) <> Path.extname(entry.client_name)])
-        # The `static/uploads` directory must exist for `File.cp!/2`
-        # and MyAppWeb.static_paths/0 should contain uploads to work,.
-        File.cp!(path, dest)
-        {:ok, "/uploads/#{Path.basename(dest)}"}
+        file_data = File.read!(path)
+        file_name = entry.client_name
+
+        %{
+          activity_id: Ecto.UUID.generate(),
+          user_id: user.id,
+          image_binary: file_data,
+          image_binary_type: Path.extname(file_name),
+          image_path: file_name
+        }
+        |> Hunt.Activity.Schema.ImageUpload.changeset()
+        |> Hunt.Repo.insert()
       end)
 
     {:noreply, update(socket, :uploaded_files, &(&1 ++ uploaded_files))}
