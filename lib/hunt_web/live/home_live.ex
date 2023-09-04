@@ -8,7 +8,14 @@ defmodule HuntWeb.HomeLive do
         <.live_component module={HuntWeb.Header} id="header" />
 
         <main class="-mt-40">
-          <.live_component module={HuntWeb.HuntCarousel} id="carousel" user={@user} hunt_mods={@hunt_mods} completion={@completion} />
+          <.live_component
+            module={HuntWeb.HuntCarousel}
+            id="carousel"
+            user={@user}
+            hunt_mods={@hunt_mods}
+            completion={@completion}
+            points={@total_points}
+          />
         </main>
 
         <div class={"z-10 fixed max-w-2xl mx-auto bottom-0 top-40 left-0 right-0 transition-all #{if @hunt, do: "translate-y-0", else: "translate-y-full"}"}>
@@ -120,7 +127,11 @@ defmodule HuntWeb.HomeLive do
   end
 
   defp load_completion(socket = %{assigns: %{user: user}}) do
-    assign(socket, :completion, Hunt.Activity.completion_summary(user: user))
+    summary = Hunt.Activity.completion_summary(user: user)
+
+    socket
+    |> assign(:completion, summary)
+    |> assign(:total_points, Hunt.Activity.total_points(summary))
   end
 
   defp handle_activity_result(result, socket, msg, close_slideout?) do
@@ -154,12 +165,10 @@ defmodule HuntWeb.HomeLive do
     end
   end
 
-  defp completed_notification(socket = %{assigns: %{completion: completion}}, msg) do
-    total_points = completion |> Map.values() |> Enum.map(& &1.points) |> Enum.sum()
-
+  defp completed_notification(socket = %{assigns: %{total_points: points}}, msg) do
     push_event(socket, "notification", %{
       type: "success",
-      text: "Boom! #{msg} You have #{total_points} points."
+      text: "Boom! #{msg} You have #{points} points."
     })
   end
 end
