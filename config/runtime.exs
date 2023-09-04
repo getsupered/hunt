@@ -101,7 +101,8 @@ if config_env() == :prod do
         Ueberauth.Strategy.Google,
         [
           client_id: System.get_env("GOOGLE_CLIENT_ID"),
-          client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+          client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
+          default_scope: "email profile"
         ]
       }
     ]
