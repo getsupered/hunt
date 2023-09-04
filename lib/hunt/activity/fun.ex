@@ -127,7 +127,7 @@ defmodule Hunt.Activity.Fun do
         </div>
       </div>
 
-      <HuntWeb.ImageButton.button {assigns} />
+      <HuntWeb.ImageButton.button {assigns} text="Upload Photo" />
     </div>
     """
   end

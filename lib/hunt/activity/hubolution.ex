@@ -168,7 +168,7 @@ defmodule Hunt.Activity.Hubolution do
         </div>
       </div>
 
-      <HuntWeb.ImageButton.button {assigns} />
+      <HuntWeb.ImageButton.button {assigns} text="Upload Selfie" />
     </div>
     """
   end
@@ -206,7 +206,7 @@ defmodule Hunt.Activity.Hubolution do
         </div>
       </div>
 
-      <HuntWeb.ImageButton.button {assigns} />
+      <HuntWeb.ImageButton.button {assigns} text="Upload Selfie" />
     </div>
     """
   end

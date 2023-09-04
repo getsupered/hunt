@@ -84,7 +84,7 @@ defmodule Hunt.Activity.Selfie1 do
         </div>
       </div>
 
-      <HuntWeb.ImageButton.button {assigns} />
+      <HuntWeb.ImageButton.button {assigns} text="Upload Selfie" />
     </div>
     """
   end
