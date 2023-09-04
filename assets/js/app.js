@@ -69,12 +69,8 @@ const hooks = {
   },
   CameraUploader: {
     mounted() {
-      document.getElementById('camera-upload--cancel').addEventListener('click', () => {
-        this.el.children[0].classList.remove('!translate-y-0')
-      })
-
       this.startFunction = () => {
-        this.el.children[0].classList.add('!translate-y-0')
+        this.pushEventTo(this.el, 'openUploader', {})
       }
 
       window.addEventListener('camera:start', this.startFunction)
