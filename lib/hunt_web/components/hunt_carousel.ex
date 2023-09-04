@@ -10,7 +10,7 @@ defmodule HuntWeb.HuntCarousel do
         <div class="splide__track">
           <ul class="splide__list">
             <li class="splide__slide">
-              <div class="mx-4 mb-8 p-4 rounded-lg bg-white dropped-border overflow-hidden">
+              <div class="mx-4 mb-4 p-4 rounded-lg bg-white dropped-border overflow-hidden">
                 <div class="prose text-xl">
                   <h2>Welcome!</h2>
 
@@ -46,7 +46,7 @@ defmodule HuntWeb.HuntCarousel do
             </li>
 
             <li :for={{slide, slide_idx} <- Enum.with_index(@hunt_mods)} class="splide__slide">
-              <div class="mx-4 mb-8 rounded-lg bg-white dropped-border overflow-hidden">
+              <div class="mx-4 mb-4 rounded-lg bg-white dropped-border overflow-hidden">
                 <img src={slide.image().src} class={"w-full max-h-[30vh] object-cover #{slide.image().class}"} />
                 <div class="px-3 py-2">
                   <div>
