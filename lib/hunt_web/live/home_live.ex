@@ -50,6 +50,19 @@ defmodule HuntWeb.HomeLive do
       |> assign(:uri, URI.parse(uri))
       |> assign(:hunt, Hunt.Activity.find_activity(params["hunt_id"]))
 
+    socket =
+      case {connected?(socket), params} do
+        {true, %{"code" => _qrcode}} ->
+          # The code should always be removed, but we need to do it async as the user may be redirected during qrscan event
+          # This code cannot run unless connected?, or the notification event isn't pushed
+          send(self(), :remove_code)
+          {:noreply, socket} = handle_event("qrscan", %{"text" => uri}, socket)
+          socket
+
+        _ ->
+          socket
+      end
+
     {:noreply, socket}
   end
 
@@ -94,6 +107,10 @@ defmodule HuntWeb.HomeLive do
     {:noreply, socket}
   end
 
+  def handle_info(:remove_code, socket) do
+    {:noreply, push_patch(socket, to: HuntWeb.uri_path(socket.assigns.uri, %{"code" => nil}), replace: true)}
+  end
+
   def handle_info(:clear_flash, socket) do
     {:noreply, clear_flash(socket)}
   end
@@ -105,7 +122,7 @@ defmodule HuntWeb.HomeLive do
   defp handle_activity_result(result, socket, msg, close_slideout?) do
     maybe_close_slideout = fn socket ->
       if close_slideout? do
-        push_patch(socket, to: HuntWeb.uri_path(socket.assigns.uri, %{"path" => "/"}))
+        push_patch(socket, to: HuntWeb.uri_path(socket.assigns.uri, %{"path" => "/", "code" => nil}))
       else
         socket
       end
