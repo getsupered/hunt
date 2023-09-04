@@ -31,8 +31,8 @@ defmodule Hunt.Activity.Fun do
                   title: "Make Lindsay laugh with a dad joke",
                   action: "@ Sprocketeer Lounge",
                   points: 75,
-                  component: &__MODULE__.qr_at_sprocketeer/1,
-                  completion: :qr_code
+                  component: &__MODULE__.dad_joke/1,
+                  completion: Hunt.Activity.Completion.Answer.expected("Knock Knock")
                 },
                 %{
                   id: "d5a63e41-7326-4446-a977-60cfab602e04",
@@ -68,7 +68,23 @@ defmodule Hunt.Activity.Fun do
                 },
                 %{
                   id: "c1b20a9c-71b6-4d44-9b19-c184075c66b3",
-                  title: "Grab a Supered Coffee",
+                  title: "Grab a Supered Coffee (Day 1)",
+                  action: "Everyday @ Sprocketeer Lounge!",
+                  points: 75,
+                  component: &__MODULE__.qr_at_sprocketeer/1,
+                  completion: :qr_code
+                },
+                %{
+                  id: "e7a9fbe0-5cbc-4f1f-9566-3b6659a62413",
+                  title: "Grab a Supered Coffee (Day 2)",
+                  action: "Everyday @ Sprocketeer Lounge!",
+                  points: 75,
+                  component: &__MODULE__.qr_at_sprocketeer/1,
+                  completion: :qr_code
+                },
+                %{
+                  id: "44c0079e-52db-49a1-9c80-0e9dbba3a8c3",
+                  title: "Grab a Supered Coffee (Day 3)",
                   action: "Everyday @ Sprocketeer Lounge!",
                   points: 75,
                   component: &__MODULE__.qr_at_sprocketeer/1,
@@ -106,6 +122,46 @@ defmodule Hunt.Activity.Fun do
       </div>
 
       <HuntWeb.QrCodeButton.button {assigns} />
+    </div>
+    """
+  end
+
+  def dad_joke(assigns) do
+    ~H"""
+    <div class="h-full flex flex-col">
+      <div class="flex-grow prose text-xl space-y-4">
+        <h2 class="max-w-[calc(100%-3rem)]"><%= @hunt.title %></h2>
+
+        <div>
+          <a href="https://inbound.expofp.com/?sprocketeer" target="_blank" class="btn btn-muted text-xl">Interactive Map</a>
+        </div>
+
+        <div>
+          <span class="font-semibold">Location: </span>
+          <span>Sprocketeer Lounge</span>
+        </div>
+
+        <div>
+          <span class="font-semibold">Points: </span>
+          <span><%= @hunt.points %>pts</span>
+        </div>
+      </div>
+
+      <HuntWeb.LoggedInForm.wrap {assigns}>
+        <.form for={nil} class="pb-8" phx-submit="submit_answer">
+          <input type="hidden" name="activity_id" value={@hunt.id} />
+          <div class="mb-4">
+            <label class="font-semibold mb-2 block">
+              Complete: What pass phrase did Lindsay give you?
+            </label>
+            <input required name="answer" type="text" placeholder="Ask Lindsay" class="w-full form-input" />
+          </div>
+
+          <button class="btn btn-primary btn-big w-full block text-2xl" phx-disable-with="Thinking...">
+            Submit Answer
+          </button>
+        </.form>
+      </HuntWeb.LoggedInForm.wrap>
     </div>
     """
   end

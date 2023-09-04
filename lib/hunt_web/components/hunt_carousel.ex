@@ -22,7 +22,10 @@ defmodule HuntWeb.HuntCarousel do
               <ul class="mx-4 my-4 space-y-4">
                 <%= if @user do %>
                   <li>
-                    <.link patch={~p"/?leaderboard=open"} class="rounded px-4 py-3 dropped-border-sm btn btn-primary flex items-center w-full text-center gap-2 text-xl">
+                    <.link
+                      patch={~p"/?leaderboard=open"}
+                      class="rounded px-4 py-3 dropped-border-sm btn btn-primary flex items-center w-full text-center gap-2 text-xl"
+                    >
                       <.icon name="hero-trophy" class="h-6 w-6" /> View Leaderboard
                     </.link>
                   </li>
@@ -68,7 +71,10 @@ defmodule HuntWeb.HuntCarousel do
               <ul class="mx-4 my-4 space-y-4">
                 <%= if @user do %>
                   <li>
-                    <.link patch={~p"/?leaderboard=open"} class="rounded px-4 py-3 dropped-border-sm btn btn-muted flex items-center w-full text-center gap-2 text-xl">
+                    <.link
+                      patch={~p"/?leaderboard=open"}
+                      class="rounded px-4 py-3 dropped-border-sm btn btn-muted flex items-center w-full text-center gap-2 text-xl"
+                    >
                       <.icon name="hero-trophy" class="h-6 w-6" /> View Leaderboard
                     </.link>
                   </li>
