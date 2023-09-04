@@ -14,6 +14,7 @@ defmodule Hunt.Application do
       Hunt.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Hunt.PubSub},
+      Hunt.Activity.Leaderboard,
       # Start the Endpoint (http/https)
       HuntWeb.Endpoint
       # Start a worker by calling: Hunt.Worker.start_link(arg)

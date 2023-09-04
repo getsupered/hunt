@@ -75,7 +75,7 @@ defmodule Hunt.Activity do
       points = if achievement?, do: mod.achievement().points + points, else: points
 
       completion = %{
-        ids: Enum.map(mod_activities, & &1.activity_id),
+        ids: Enum.map(pointed_activities, & &1.activity_id),
         achievement: achievement?,
         count: if(achievement?, do: pointed_activities_count + 1, else: pointed_activities_count),
         activity_count: pointed_activities_count,
@@ -85,6 +85,13 @@ defmodule Hunt.Activity do
       {mod, completion}
     end)
     |> Map.new()
+  end
+
+  def total_points(summary) do
+    summary
+    |> Map.values()
+    |> Enum.map(& &1.points)
+    |> Enum.sum()
   end
 
   def completed_activities(user: nil), do: []
