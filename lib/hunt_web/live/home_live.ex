@@ -52,9 +52,12 @@ defmodule HuntWeb.HomeLive do
   end
 
   def handle_params(params, uri, socket) do
+    leaderboard_changed? = params["leaderboard"] != (socket.assigns[:params] || %{})["leaderboard"]
+
     socket =
       socket
       |> assign(:uri, URI.parse(uri))
+      |> assign(:params, params)
       |> assign(:hunt, Hunt.Activity.find_activity(params["hunt_id"]))
 
     socket =
@@ -69,6 +72,10 @@ defmodule HuntWeb.HomeLive do
         _ ->
           socket
       end
+
+    if leaderboard_changed? do
+      send_update(HuntWeb.Leaderboard, id: "leaderboard", open?: params["leaderboard"])
+    end
 
     {:noreply, socket}
   end
@@ -128,8 +135,11 @@ defmodule HuntWeb.HomeLive do
 
   defp load_completion(socket = %{assigns: %{user: user}}) do
     summary = Hunt.Activity.completion_summary(user: user)
-    # This will be self-correcting if there's any issues
-    Hunt.Activity.Leaderboard.update_user(summary, user)
+
+    if user do
+      # This will be self-correcting if there's any issues
+      Hunt.Activity.Leaderboard.update_user(summary, user)
+    end
 
     socket
     |> assign(:completion, summary)

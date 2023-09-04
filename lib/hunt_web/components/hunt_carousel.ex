@@ -20,6 +20,14 @@ defmodule HuntWeb.HuntCarousel do
               </div>
 
               <ul class="mx-4 my-4 space-y-4">
+                <%= if @user do %>
+                  <li class="rounded px-4 py-3 dropped-border-sm flex items-start gap-4">
+                    <.link patch={~p"/?leaderboard=open"} class="btn btn-primary flex items-center w-full text-center gap-2 text-xl">
+                      <.icon name="hero-trophy" class="h-6 w-6" /> View Leaderboard
+                    </.link>
+                  </li>
+                <% end %>
+
                 <li class="rounded px-4 py-3 dropped-border-sm flex items-start gap-4">
                   <%= if @user do %>
                     <div class="flex-grow">

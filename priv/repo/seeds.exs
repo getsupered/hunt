@@ -2,6 +2,7 @@
 #
 #     mix run priv/repo/seeds.exs
 #
+
 defmodule Seed do
   def setup_random_completions(users: users) do
     num_completions = length(users) * 15

@@ -77,11 +77,12 @@ defmodule Hunt.Activity.LeaderboardTest do
 
     leaderboard = Hunt.Activity.Leaderboard.OrderedLeaders.from_ets(ets)
 
-    for entry <- leaderboard, reduce: %{points: 100_000} do
+    for {entry, idx} <- Enum.with_index(leaderboard), reduce: %{points: 100_000} do
       prev ->
         assert entry.points <= prev.points
         assert entry.user_id
         assert entry.user_name
+        assert entry.place == idx + 1
         entry
     end
   end

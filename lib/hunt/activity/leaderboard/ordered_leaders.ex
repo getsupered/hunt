@@ -16,6 +16,8 @@ defmodule Hunt.Activity.Leaderboard.OrderedLeaders do
       end)
       |> Enum.sort_by(& {&1.points, &1.user_name})
       |> Enum.reverse()
+      |> Enum.with_index()
+      |> Enum.map(fn {m, idx} -> Map.put(m, :place, idx + 1) end)
 
     :ets.insert(ets, {:ordered_leaderboard, leaderboard})
   end

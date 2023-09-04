@@ -16,6 +16,13 @@ defmodule Hunt.Activity.Leaderboard do
     GenServer.start_link(__MODULE__, opts, name: name)
   end
 
+  def ordered_leaderboard(user: user) do
+    Hunt.Activity.Leaderboard.OrderedLeaders.from_ets()
+    |> Enum.filter(fn entry ->
+      (entry.place <= 20 && entry.points > 0) || (user && entry.user_id == user.id)
+    end)
+  end
+
   def update_user(summary, user, server \\ __MODULE__) do
     GenServer.call(server, {:update_user, summary, user})
   end
@@ -59,6 +66,7 @@ defmodule Hunt.Activity.Leaderboard do
 
     new_scores_by_user = Map.put(state.scores_by_user, user.id, new_score)
     state = %{state | scores_by_user: new_scores_by_user}
+    Hunt.Activity.Leaderboard.OrderedLeaders.update_from_leaderboard_state(state)
 
     {:reply, :ok, state}
   end
