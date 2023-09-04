@@ -144,6 +144,28 @@ defmodule Hunt.Activity do
     end
   end
 
+  def submit_image(_id, _upload_params, user: nil) do
+    {:error, "Must log in first"}
+  end
+
+  def submit_image(id, upload_params, user: user) do
+    case find_activity(id) do
+      nil ->
+        {:error, "Error completing hunt: missing #{id}"}
+
+      act = %{completion: :image} ->
+        Repo.transaction(fn ->
+          with {:ok, hunt} <- create_activity_completion(act, user, :pending, %{}),
+              {:ok, upload} <- create_image_upload(upload_params),
+              {:ok, hunt} <- Ecto.Changeset.change(hunt, image_upload_id: upload.id) |> Repo.update() do
+            hunt
+          else
+            {:error, cs} -> Repo.rollback(cs)
+          end
+        end)
+    end
+  end
+
   def find_activity(id) do
     Enum.find(activities(), &(&1.id == id))
   end
@@ -175,6 +197,12 @@ defmodule Hunt.Activity do
           ]
         )
     )
+  end
+
+  defp create_image_upload(params) do
+    params
+    |> Hunt.Activity.Schema.ImageUpload.changeset()
+    |> Hunt.Repo.insert()
   end
 
   def reject_answer(completed_activity, by_user: user) do

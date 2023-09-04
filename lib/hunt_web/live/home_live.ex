@@ -115,6 +115,10 @@ defmodule HuntWeb.HomeLive do
     {:noreply, clear_flash(socket)}
   end
 
+  def handle_info({:activity_result, result, msg}, socket) do
+    {:noreply, handle_activity_result(result, socket, msg, true)}
+  end
+
   defp load_completion(socket = %{assigns: %{user: user}}) do
     assign(socket, :completion, Hunt.Activity.completion_summary(user: user))
   end

@@ -62,15 +62,19 @@ const hooks = {
   CameraButton: {
     mounted() {
       this.el.addEventListener('click', () => {
-        const evt = new CustomEvent('camera:start')
+        const evt = new CustomEvent('camera:start', { detail: { huntId: this.el.dataset.huntId }})
         window.dispatchEvent(evt)
       })
     }
   },
   CameraUploader: {
     mounted() {
-      this.startFunction = () => {
-        this.pushEventTo(this.el, 'openUploader', {})
+      this.startFunction = (evt) => {
+        const huntId = evt.detail.huntId
+
+        if (huntId) {
+          this.pushEventTo(this.el, 'openUploader', { huntId })
+        }
       }
 
       window.addEventListener('camera:start', this.startFunction)
