@@ -2,9 +2,9 @@ defmodule Hunt.User do
   alias Hunt.Repo
   alias Hunt.User.Schema
 
-  def find_or_create_user(auth: %{info: %{email: email}}) when is_binary(email) do
+  def find_or_create_user(auth: %{info: %{email: email, first_name: fname, last_name: lname}}) when is_binary(email) do
     case Repo.get_by(Schema.User, email: email) do
-      nil -> create_user(email)
+      nil -> create_user(email, fname, lname)
       ret -> {:ok, ret}
     end
   end
@@ -15,8 +15,8 @@ defmodule Hunt.User do
     Repo.get(Schema.User, id)
   end
 
-  defp create_user(email) do
-    %{email: email}
+  defp create_user(email, first_name, last_name) do
+    %{email: email, first_name: first_name, last_name: last_name}
     |> Schema.User.changeset()
     |> Repo.insert()
   end

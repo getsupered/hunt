@@ -7,16 +7,18 @@ defmodule Hunt.User.Schema.User do
   @foreign_key_type Ecto.UUID
   schema "users" do
     field :email, :string
+    field :first_name, :string
+    field :last_name, :string
 
     timestamps()
   end
 
   def changeset(attrs) do
-    fields = [:email]
+    fields = [:email, :first_name, :last_name]
 
     %__MODULE__{}
     |> cast(attrs, fields)
-    |> validate_required(fields)
+    |> validate_required([:email])
     |> unique_constraint([:email])
   end
 end
