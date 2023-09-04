@@ -129,11 +129,7 @@ defmodule Hunt.Activity.Lounge do
         </div>
       </div>
 
-      <div class="pb-8">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
-        </button>
-      </div>
+      <HuntWeb.QrCodeButton.button {assigns} />
     </div>
     """
   end
@@ -164,11 +160,7 @@ defmodule Hunt.Activity.Lounge do
         </div>
       </div>
 
-      <div class="pb-8">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
-        </button>
-      </div>
+      <HuntWeb.QrCodeButton.button {assigns} />
     </div>
     """
   end
@@ -199,11 +191,7 @@ defmodule Hunt.Activity.Lounge do
         </div>
       </div>
 
-      <div class="pb-8">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
-        </button>
-      </div>
+      <HuntWeb.QrCodeButton.button {assigns} />
     </div>
     """
   end
@@ -234,11 +222,7 @@ defmodule Hunt.Activity.Lounge do
         </div>
       </div>
 
-      <div class="pb-8">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
-        </button>
-      </div>
+      <HuntWeb.QrCodeButton.button {assigns} />
     </div>
     """
   end
@@ -269,11 +253,7 @@ defmodule Hunt.Activity.Lounge do
         </div>
       </div>
 
-      <div class="pb-8">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
-        </button>
-      </div>
+      <HuntWeb.QrCodeButton.button {assigns} />
     </div>
     """
   end
@@ -304,11 +284,7 @@ defmodule Hunt.Activity.Lounge do
         </div>
       </div>
 
-      <div class="pb-8">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
-        </button>
-      </div>
+      <HuntWeb.QrCodeButton.button {assigns} />
     </div>
     """
   end
@@ -339,11 +315,7 @@ defmodule Hunt.Activity.Lounge do
         </div>
       </div>
 
-      <div class="pb-8">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
-        </button>
-      </div>
+      <HuntWeb.QrCodeButton.button {assigns} />
     </div>
     """
   end
@@ -374,11 +346,7 @@ defmodule Hunt.Activity.Lounge do
         </div>
       </div>
 
-      <div class="pb-8">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
-        </button>
-      </div>
+      <HuntWeb.QrCodeButton.button {assigns} />
     </div>
     """
   end
@@ -409,11 +377,7 @@ defmodule Hunt.Activity.Lounge do
         </div>
       </div>
 
-      <div class="pb-8">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="scan-button" phx-hook="QRScanButton">
-          <.icon name="hero-qr-code" class="h-8 w-8 mr-2" /> Scan QR Code
-        </button>
-      </div>
+      <HuntWeb.QrCodeButton.button {assigns} />
     </div>
     """
   end

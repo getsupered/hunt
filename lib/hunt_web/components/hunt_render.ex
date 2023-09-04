@@ -4,7 +4,7 @@ defmodule HuntWeb.HuntRender do
   def render(assigns) do
     ~H"""
     <div class="h-full">
-      <%= @hunt.component.(%{hunt: @hunt, completed: @completion}) %>
+      <%= @hunt.component.(%{hunt: @hunt, completed: @completion, user: @user}) %>
     </div>
     """
   end

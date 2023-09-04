@@ -86,19 +86,21 @@ defmodule Hunt.Activity.Supered do
         </div>
       </div>
 
-      <.form for={nil} class="pb-8" phx-submit="submit_answer">
-        <input type="hidden" name="activity_id" value={@hunt.id} />
-        <div class="mb-4">
-          <label class="font-semibold mb-2 block">
-            Complete: What phrase is shown at the bottom of an embedded card?
-          </label>
-          <input required name="answer" type="text" placeholder="Hint: ViS" class="w-full form-input" />
-        </div>
+      <HuntWeb.LoggedInForm.wrap {assigns}>
+        <.form for={nil} class="pb-8" phx-submit="submit_answer">
+          <input type="hidden" name="activity_id" value={@hunt.id} />
+          <div class="mb-4">
+            <label class="font-semibold mb-2 block">
+              Complete: What phrase is shown at the bottom of an embedded card?
+            </label>
+            <input required name="answer" type="text" placeholder="Hint: ViS" class="w-full form-input" />
+          </div>
 
-        <button class="btn btn-primary btn-big w-full block text-2xl">
-          Submit Answer
-        </button>
-      </.form>
+          <button class="btn btn-primary btn-big w-full block text-2xl">
+            Submit Answer
+          </button>
+        </.form>
+      </HuntWeb.LoggedInForm.wrap>
     </div>
     """
   end
@@ -119,19 +121,21 @@ defmodule Hunt.Activity.Supered do
         </div>
       </div>
 
-      <.form for={nil} class="pb-8" phx-submit="submit_answer">
-        <input type="hidden" name="activity_id" value={@hunt.id} />
-        <div class="mb-4">
-          <label class="font-semibold mb-2 block">
-            Complete: What is the third tab in "Build Rule"?
-          </label>
-          <input required name="answer" type="text" placeholder="Hint: L" class="w-full form-input" />
-        </div>
+      <HuntWeb.LoggedInForm.wrap {assigns}>
+        <.form for={nil} class="pb-8" phx-submit="submit_answer">
+          <input type="hidden" name="activity_id" value={@hunt.id} />
+          <div class="mb-4">
+            <label class="font-semibold mb-2 block">
+              Complete: What is the third tab in "Build Rule"?
+            </label>
+            <input required name="answer" type="text" placeholder="Hint: L" class="w-full form-input" />
+          </div>
 
-        <button class="btn btn-primary btn-big w-full block text-2xl">
-          Submit Answer
-        </button>
-      </.form>
+          <button class="btn btn-primary btn-big w-full block text-2xl">
+            Submit Answer
+          </button>
+        </.form>
+      </HuntWeb.LoggedInForm.wrap>
     </div>
     """
   end
@@ -152,19 +156,21 @@ defmodule Hunt.Activity.Supered do
         </div>
       </div>
 
-      <.form for={nil} class="pb-8" phx-submit="submit_answer">
-        <input type="hidden" name="activity_id" value={@hunt.id} />
-        <div class="mb-4">
-          <label class="font-semibold mb-2 block">
-            Complete: After connecting to HubSpot, what does the top button of "Data Dictionary" say?
-          </label>
-          <input required name="answer" type="text" placeholder="Hint: SF" class="w-full form-input" />
-        </div>
+      <HuntWeb.LoggedInForm.wrap {assigns}>
+        <.form for={nil} class="pb-8" phx-submit="submit_answer">
+          <input type="hidden" name="activity_id" value={@hunt.id} />
+          <div class="mb-4">
+            <label class="font-semibold mb-2 block">
+              Complete: After connecting to HubSpot, what does the top button of "Data Dictionary" say?
+            </label>
+            <input required name="answer" type="text" placeholder="Hint: SF" class="w-full form-input" />
+          </div>
 
-        <button class="btn btn-primary btn-big w-full block text-2xl">
-          Submit Answer
-        </button>
-      </.form>
+          <button class="btn btn-primary btn-big w-full block text-2xl">
+            Submit Answer
+          </button>
+        </.form>
+      </HuntWeb.LoggedInForm.wrap>
     </div>
     """
   end
@@ -205,11 +211,7 @@ defmodule Hunt.Activity.Supered do
         </div>
       </div>
 
-      <div class="pb-8 mt-4">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="camera-button" phx-hook="CameraButton">
-          <.icon name="hero-camera" class="h-8 w-8 mr-2" /> Upload Screenshot
-        </button>
-      </div>
+      <HuntWeb.ImageButton.button {assigns} />
     </div>
     """
   end
@@ -226,19 +228,21 @@ defmodule Hunt.Activity.Supered do
         </div>
       </div>
 
-      <.form for={nil} class="pb-8" phx-submit="submit_answer">
-        <input type="hidden" name="activity_id" value={@hunt.id} />
-        <div class="mb-4">
-          <label class="font-semibold mb-2 block">
-            Complete: How would you use Supered at your company?
-          </label>
-          <textarea required name="answer" class="w-full form-input" rows="3" placeholder="Give us a few sentences, we're curious!" />
-        </div>
+      <HuntWeb.LoggedInForm.wrap {assigns}>
+        <.form for={nil} class="pb-8" phx-submit="submit_answer">
+          <input type="hidden" name="activity_id" value={@hunt.id} />
+          <div class="mb-4">
+            <label class="font-semibold mb-2 block">
+              Complete: How would you use Supered at your company?
+            </label>
+            <textarea required name="answer" class="w-full form-input" rows="3" placeholder="Give us a few sentences, we're curious!" />
+          </div>
 
-        <button class="btn btn-primary btn-big w-full block text-2xl">
-          Submit Answer
-        </button>
-      </.form>
+          <button class="btn btn-primary btn-big w-full block text-2xl">
+            Submit Answer
+          </button>
+        </.form>
+      </HuntWeb.LoggedInForm.wrap>
     </div>
     """
   end

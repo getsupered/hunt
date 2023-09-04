@@ -84,11 +84,7 @@ defmodule Hunt.Activity.Selfie1 do
         </div>
       </div>
 
-      <div class="pb-8">
-        <button class="btn btn-primary btn-big w-full block text-2xl" id="camera-button" phx-hook="CameraButton">
-          <.icon name="hero-camera" class="h-8 w-8 mr-2" /> Upload Selfie
-        </button>
-      </div>
+      <HuntWeb.ImageButton.button {assigns} />
     </div>
     """
   end

@@ -5,21 +5,21 @@
 @import "tailwindcss/utilities";
 
 @font-face {
-  font-family: 'Inter var';
+  font-family: "Inter var";
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url('/fonts/Inter-roman.var.woff2?v=3.19') format('woff2');
-  font-named-instance: 'Regular';
+  src: url("/fonts/Inter-roman.var.woff2?v=3.19") format("woff2");
+  font-named-instance: "Regular";
 }
 
 @font-face {
-  font-family: 'Inter var';
+  font-family: "Inter var";
   font-style: italic;
   font-weight: 100 900;
   font-display: swap;
-  src: url('/fonts/Inter-italic.var.woff2?v=3.19') format('woff2');
-  font-named-instance: 'Italic';
+  src: url("/fonts/Inter-italic.var.woff2?v=3.19") format("woff2");
+  font-named-instance: "Italic";
 }
 
 html {
@@ -28,111 +28,111 @@ html {
 
 @layer utilities {
   .dropped-border {
-  @apply border-2 border-[#222];
-  box-shadow: 3px 3px 0 0 #222;
+    @apply border-2 border-[#222];
+    box-shadow: 3px 3px 0 0 #222;
   }
 
   .dropped-border-sm {
-  @apply border border-[#222];
-  box-shadow: 2px 2px 0 0 #222;
+    @apply border border-[#222];
+    box-shadow: 2px 2px 0 0 #222;
   }
 
   .dropped-border-white {
-  @apply border-2 border-[white];
-  box-shadow: 4px 4px 0 -1px white;
+    @apply border-2 border-[white];
+    box-shadow: 4px 4px 0 -1px white;
   }
 
   .dropped-border-cobalt-600 {
-  @apply border-2 border-cobalt-600;
-  box-shadow: 4px 4px 0 -1px theme('colors.cobalt.600');
+    @apply border-2 border-cobalt-600;
+    box-shadow: 4px 4px 0 -1px theme("colors.cobalt.600");
   }
 
   /* Apply opacity changes to translations, as these classes are only used to keep modals off-screen */
   .translate-y-full {
-  @apply opacity-0;
+    @apply opacity-0;
   }
 
   .translate-y-0 {
-  @apply opacity-100;
+    @apply opacity-100;
   }
 }
 
 @layer components {
   .btn {
-  @apply inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm;
-  @apply focus:outline-none focus:ring-inset focus:ring-2 focus:ring-offset-2;
-  @apply disabled:btn-disabled;
-  @apply no-underline;
-  @apply bg-gray-100 hover:bg-gray-200 focus:ring-gray-300;
-  @apply touch-manipulation;
+    @apply inline-flex items-center justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm;
+    @apply focus:outline-none focus:ring-inset focus:ring-2 focus:ring-offset-2;
+    @apply disabled:btn-disabled;
+    @apply no-underline;
+    @apply bg-gray-100 hover:bg-gray-200 focus:ring-gray-300;
+    @apply touch-manipulation;
   }
 
   .btn-muted {
-  @apply bg-white border border-gray-200;
+    @apply bg-white border border-gray-200;
   }
 
   .btn-primary {
-  @apply bg-pink-600 text-white hover:text-white hover:bg-pink-700 focus:ring-pink-500;
+    @apply bg-pink-600 text-white hover:text-white hover:bg-pink-700 focus:ring-pink-500;
   }
 
   .btn-cobalt-300 {
-  @apply bg-cobalt-300 text-white hover:text-white hover:bg-cobalt-400 focus:ring-cobalt-300;
+    @apply bg-cobalt-300 text-white hover:text-white hover:bg-cobalt-400 focus:ring-cobalt-300;
   }
 
   .btn-cobalt-700 {
-  @apply bg-cobalt-700 text-white hover:text-white hover:bg-cobalt-800 focus:ring-cobalt-600;
+    @apply bg-cobalt-700 text-white hover:text-white hover:bg-cobalt-800 focus:ring-cobalt-600;
   }
 
   .btn-disabled {
-  @apply opacity-75 cursor-not-allowed shadow-none bg-gray-500 hover:bg-gray-500 focus:ring-0;
+    @apply opacity-75 cursor-not-allowed shadow-none bg-gray-500 hover:bg-gray-500 focus:ring-0;
   }
 
   .btn-big {
-  @apply px-6 py-4;
+    @apply px-6 py-4;
   }
 
   .btn-sm {
-  @apply px-3 py-1;
+    @apply px-3 py-1;
   }
 
   .btn-xs {
-  @apply px-3 py-[1px];
+    @apply px-3 py-[1px];
   }
 
   .btn-flat {
-  @apply shadow-none;
+    @apply shadow-none;
   }
 
   .badge {
-  @apply inline-flex flex-none items-center rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800;
+    @apply inline-flex flex-none items-center rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800;
   }
 
   .badge-error {
-  @apply bg-red-100 text-red-800;
+    @apply bg-red-100 text-red-800;
   }
 
   .badge-warning {
-  @apply bg-yellow-100 text-yellow-800;
+    @apply bg-yellow-100 text-yellow-800;
   }
 
   .badge-info {
-  @apply bg-cobalt-600 text-white;
+    @apply bg-cobalt-600 text-white;
   }
 }
 
 @layer components {
   .form-input {
-  @apply block rounded-md bg-white border-gray-300 focus:border-pink-500 focus:ring-inset focus:ring-pink-500;
-  @apply placeholder-gray-400 text-gray-700 sm:text-sm focus-within:text-gray-800;
-  @apply disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed;
+    @apply block rounded-md bg-white border-gray-300 focus:border-pink-500 focus:ring-inset focus:ring-pink-500;
+    @apply placeholder-gray-400 text-gray-700 sm:text-sm focus-within:text-gray-800;
+    @apply disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed;
   }
 
   select.form-input {
-  @apply pr-8;
+    @apply pr-8;
   }
 
   .form-checkbox {
-  @apply h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500;
+    @apply h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500;
   }
 }
 
