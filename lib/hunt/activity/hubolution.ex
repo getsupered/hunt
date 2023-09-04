@@ -31,28 +31,32 @@ defmodule Hunt.Activity.Hubolution do
                   title: "Join Sprocketeer Discord",
                   action: "Over 1500 HubSpot enthusiasts in one place!",
                   points: 100,
-                  component: &__MODULE__.discord/1
+                  component: &__MODULE__.discord/1,
+                  completion: Hunt.Activity.Completion.Answer.expected("Captain Sprocket")
                 },
                 %{
                   id: "a9882a9b-c2be-419b-9a2f-01841900d39b",
                   title: "Use a photo booth at Hubolution Party",
                   action: "Big cheesin' at the afterparty",
                   points: 150,
-                  component: &__MODULE__.photo_booth/1
+                  component: &__MODULE__.photo_booth/1,
+                  completion: :qr_code
                 },
                 %{
                   id: "fc3e481f-2b13-4dc7-8ac0-9cd2a32cd27a",
                   title: "Get interviewed by \"The Mayor of INBOUND\"",
                   action: "Tall guy, orange suit, loves HubSpot",
                   points: 300,
-                  component: &__MODULE__.mayor/1
+                  component: &__MODULE__.mayor/1,
+                  completion: :image
                 },
                 %{
                   id: "96205e49-81ff-420d-bd99-c2002db9b094",
                   title: "Post Hubolution Party pic with #hubolution",
                   action: "You'll have a bunch of fun, so share it with the world",
                   points: 300,
-                  component: &__MODULE__.afterparty_pic/1
+                  component: &__MODULE__.afterparty_pic/1,
+                  completion: :image
                 }
               ]
               |> Enum.sort_by(& &1.title)

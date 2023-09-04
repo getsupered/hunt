@@ -32,7 +32,8 @@ defmodule Hunt.Activity.Selfie2 do
                   action: "The HubSpot Professor",
                   points: 100,
                   component: &Hunt.Activity.Selfie1.selfie/1,
-                  linkedin: "https://www.linkedin.com/in/kyleanthonyjepson/"
+                  linkedin: "https://www.linkedin.com/in/kyleanthonyjepson/",
+                  completion: :image
                 },
                 %{
                   id: "6626e442-cd27-4b50-8a87-1fae36825f82",
@@ -40,7 +41,8 @@ defmodule Hunt.Activity.Selfie2 do
                   action: "Supered Selfie with Supered Matt",
                   points: 100,
                   component: &Hunt.Activity.Selfie1.selfie/1,
-                  linkedin: "https://www.linkedin.com/in/matthewbolian/"
+                  linkedin: "https://www.linkedin.com/in/matthewbolian/",
+                  completion: :image
                 },
                 %{
                   id: "3a46b231-7b3c-4aad-b1d7-7e3363c10669",
@@ -48,7 +50,8 @@ defmodule Hunt.Activity.Selfie2 do
                   action: "Chief Evangelist @ Hapily",
                   points: 100,
                   component: &Hunt.Activity.Selfie1.selfie/1,
-                  linkedin: "https://www.linkedin.com/in/maxjacobcohen/"
+                  linkedin: "https://www.linkedin.com/in/maxjacobcohen/",
+                  completion: :image
                 },
                 %{
                   id: "346a6caa-6bab-4215-88b6-1b51aae979bb",
@@ -56,7 +59,8 @@ defmodule Hunt.Activity.Selfie2 do
                   action: "The Mayor of INBOUND, RevPartners",
                   points: 100,
                   component: &Hunt.Activity.Selfie1.selfie/1,
-                  linkedin: "https://www.linkedin.com/in/robert-jones-%F0%9F%A4%A0-a9878bb1/"
+                  linkedin: "https://www.linkedin.com/in/robert-jones-%F0%9F%A4%A0-a9878bb1/",
+                  completion: :image
                 }
               ]
               |> Enum.sort_by(& &1.title)

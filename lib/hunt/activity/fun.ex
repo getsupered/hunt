@@ -31,42 +31,48 @@ defmodule Hunt.Activity.Fun do
                   title: "Make Lindsay laugh with a dad joke",
                   action: "@ Sprocketeer Lounge",
                   points: 75,
-                  component: &__MODULE__.qr_at_sprocketeer/1
+                  component: &__MODULE__.qr_at_sprocketeer/1,
+                  completion: :qr_code
                 },
                 %{
                   id: "d5a63e41-7326-4446-a977-60cfab602e04",
                   title: "Supered sticker on your device",
                   action: "@ Sprocketeer Lounge",
                   points: 75,
-                  component: &__MODULE__.qr_at_sprocketeer/1
+                  component: &__MODULE__.qr_at_sprocketeer/1,
+                  completion: :qr_code
                 },
                 %{
                   id: "d87f44d4-d8f6-4060-907a-897ab25aaf88",
                   title: "Sing 15 secs of Supered World w/ Wig",
                   action: "Bring music to Matt's ears",
                   points: 150,
-                  component: &__MODULE__.qr_at_sprocketeer/1
+                  component: &__MODULE__.qr_at_sprocketeer/1,
+                  completion: :qr_code
                 },
                 %{
                   id: "7b7c7d75-cf55-4e96-b911-2202f62cfa3c",
                   title: "Collect 5 Conference Shirts",
                   action: "Can be from anywhere",
                   points: 150,
-                  component: &__MODULE__.shirts/1
+                  component: &__MODULE__.shirts/1,
+                  completion: :image
                 },
                 %{
                   id: "6ecfb3b1-2e94-404c-87b5-b7b22a8dea72",
                   title: "Wear a Supered Shirt",
                   action: "Looking good, Supered Star",
                   points: 150,
-                  component: &__MODULE__.qr_at_sprocketeer/1
+                  component: &__MODULE__.qr_at_sprocketeer/1,
+                  completion: :qr_code
                 },
                 %{
                   id: "c1b20a9c-71b6-4d44-9b19-c184075c66b3",
                   title: "Grab a Supered Coffee",
                   action: "Everyday @ Sprocketeer Lounge!",
                   points: 75,
-                  component: &__MODULE__.qr_at_sprocketeer/1
+                  component: &__MODULE__.qr_at_sprocketeer/1,
+                  completion: :qr_code
                 }
               ]
               |> Enum.sort_by(& &1.title)

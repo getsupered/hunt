@@ -31,28 +31,32 @@ defmodule Hunt.Activity.Attend do
                   title: "10k Pitch Attendee",
                   action: "Click for location",
                   points: 150,
-                  component: &__MODULE__.ten_k_pitch/1
+                  component: &__MODULE__.ten_k_pitch/1,
+                  completion: :qr_code
                 },
                 %{
                   id: "bf31f5d1-8247-4414-be8b-9084400e2a08",
                   title: "HUG Attendee: HubSpot Admins",
                   action: "Click for location",
                   points: 150,
-                  component: &__MODULE__.hug_admin/1
+                  component: &__MODULE__.hug_admin/1,
+                  completion: :qr_code
                 },
                 %{
                   id: "59180db0-0161-4b4c-ad53-170fbe309ae8",
                   title: "Session: Supered Adoption Framework",
                   action: "Click for location",
                   points: 150,
-                  component: &__MODULE__.adoption/1
+                  component: &__MODULE__.adoption/1,
+                  completion: :qr_code
                 },
                 %{
                   id: "f9f1f4de-cc67-46e6-997d-0570296cddbf",
                   title: "Attend Hubolution Party",
                   action: "Click for location",
                   points: 250,
-                  component: &__MODULE__.attend_party/1
+                  component: &__MODULE__.attend_party/1,
+                  completion: :qr_code
                 }
               ]
               |> Enum.sort_by(& &1.title)

@@ -31,21 +31,24 @@ defmodule Hunt.Activity.Social do
                   title: "Post a picture with your fanny pack and tag Supered",
                   action: "They're back in fashion?!",
                   points: 150,
-                  component: &__MODULE__.fanny_pack/1
+                  component: &__MODULE__.fanny_pack/1,
+                  completion: :image
                 },
                 %{
                   id: "1865303b-1c6a-432e-b3d1-268d5fadadc9",
                   title: "Follow Supered on LinkedIn",
                   action: "These points are a click away",
                   points: 150,
-                  component: &__MODULE__.linkedin/1
+                  component: &__MODULE__.linkedin/1,
+                  completion: :image
                 },
                 %{
                   id: "b92661eb-ee13-4490-bbc3-1903503e9ee4",
                   title: "LinkedIn Post: \"Favorite thing about Supered\"",
                   action: "Share your Supered awesomeness",
                   points: 300,
-                  component: &__MODULE__.linkedin_post/1
+                  component: &__MODULE__.linkedin_post/1,
+                  completion: :image
                 }
               ]
               |> Enum.sort_by(& &1.title)

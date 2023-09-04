@@ -32,7 +32,8 @@ defmodule Hunt.Activity.Selfie1 do
                   action: "Co-Founder at HubSpot",
                   points: 100,
                   component: &__MODULE__.selfie/1,
-                  linkedin: "https://www.linkedin.com/in/brianhalligan/"
+                  linkedin: "https://www.linkedin.com/in/brianhalligan/",
+                  completion: :image
                 },
                 %{
                   id: "2c62226d-2513-4fee-b8fd-625107300ccb",
@@ -40,7 +41,8 @@ defmodule Hunt.Activity.Selfie1 do
                   action: "Founder and CTO at HubSpot",
                   points: 100,
                   component: &__MODULE__.selfie/1,
-                  linkedin: "https://www.linkedin.com/in/dharmesh/"
+                  linkedin: "https://www.linkedin.com/in/dharmesh/",
+                  completion: :image
                 },
                 %{
                   id: "43663b50-612f-4f01-b93e-199304db5993",
@@ -48,7 +50,8 @@ defmodule Hunt.Activity.Selfie1 do
                   action: "CEO of HubSpot",
                   points: 100,
                   component: &__MODULE__.selfie/1,
-                  linkedin: "https://www.linkedin.com/in/yaminirangan/"
+                  linkedin: "https://www.linkedin.com/in/yaminirangan/",
+                  completion: :image
                 }
               ]
               |> Enum.sort_by(& &1.title)

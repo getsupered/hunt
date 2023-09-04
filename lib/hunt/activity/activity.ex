@@ -19,11 +19,46 @@ defmodule Hunt.Activity do
   ]
 
   @activities Enum.flat_map(@activity_modules, fn mod ->
-                Enum.map(mod.activities(), &Map.put(&1, :module, mod))
+                Enum.map(mod.activities(), fn activity ->
+                  case activity.completion do
+                    %Hunt.Activity.Completion.Answer{} -> nil
+                    :qr_code -> nil
+                    :image -> nil
+                  end
+
+                  Map.put(activity, :module, mod)
+                end)
               end)
+
+  @qrcodes Enum.flat_map(Enum.with_index(@activity_modules), fn {mod, idx} ->
+             Enum.map(mod.activities(), fn activity ->
+               if activity.completion == :qr_code do
+                 feature = idx + 1
+                 svg_settings = %QRCode.Render.SvgSettings{image: {"priv/static/images/supered_svg_logo.svg", 200}}
+
+                 {:ok, qr_svg} =
+                   "https://hunt.supered.io/hunt/#{activity.id}?feature=#{feature}&code=#{:erlang.phash2(activity.id)}"
+                   |> QRCode.create(:high)
+                   |> QRCode.render(:svg, svg_settings)
+
+                 {activity.id, qr_svg}
+               end
+             end)
+           end)
+           |> Enum.reject(& is_nil/1)
+           |> Map.new()
 
   def activity_modules, do: @activity_modules
   def activities, do: @activities
+
+  def qr_code(activity, :svg) do
+    Map.fetch!(@qrcodes, activity.id)
+  end
+
+  def qr_code(activity, :base64) do
+    {:ok, base64} = QRCode.to_base64({:ok, Map.fetch!(@qrcodes, activity.id)})
+    "data:image/svg+xml; base64, " <> base64
+  end
 
   def completion_summary(user: user) do
     activities = completed_activities(user: user) |> Enum.group_by(& &1.activity_module)

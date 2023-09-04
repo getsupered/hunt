@@ -32,7 +32,8 @@ defmodule Hunt.Activity.Selfie3 do
                   action: "Heads of Customer Success at Supered",
                   points: 100,
                   component: &Hunt.Activity.Selfie1.selfie/1,
-                  linkedin: "https://www.linkedin.com/in/lindsayjohn92/"
+                  linkedin: "https://www.linkedin.com/in/lindsayjohn92/",
+                  completion: :image
                 },
                 %{
                   id: "af79a828-11c7-4828-af2a-0b881ccbd801",
@@ -40,7 +41,8 @@ defmodule Hunt.Activity.Selfie3 do
                   action: "HubSpot Admin HUG Co-leader",
                   points: 100,
                   component: &Hunt.Activity.Selfie1.selfie/1,
-                  linkedin: "https://www.linkedin.com/in/dguiloff/"
+                  linkedin: "https://www.linkedin.com/in/dguiloff/",
+                  completion: :image
                 },
                 %{
                   id: "f27b8420-d966-4e2c-a7cc-39479b61af5f",
@@ -48,7 +50,8 @@ defmodule Hunt.Activity.Selfie3 do
                   action: "Principle Marketing Manager (Community) at HubSpot",
                   points: 100,
                   component: &Hunt.Activity.Selfie1.selfie/1,
-                  linkedin: "https://www.linkedin.com/in/christinamgarnett/"
+                  linkedin: "https://www.linkedin.com/in/christinamgarnett/",
+                  completion: :image
                 },
                 %{
                   id: "3b18291f-c999-46be-b871-edc1dfaf3e13",
@@ -56,7 +59,8 @@ defmodule Hunt.Activity.Selfie3 do
                   action: "Co-founder & Co-Ceo at Chili Piper",
                   points: 100,
                   component: &Hunt.Activity.Selfie1.selfie/1,
-                  linkedin: "https://www.linkedin.com/in/alinav/"
+                  linkedin: "https://www.linkedin.com/in/alinav/",
+                  completion: :image
                 }
               ]
               |> Enum.sort_by(& &1.title)
