@@ -14,7 +14,7 @@ defmodule Hunt.Activity.Leaderboard.OrderedLeaders do
           user_name: user_name(summary.user)
         }
       end)
-      |> Enum.sort_by(& {&1.points, &1.user_name})
+      |> Enum.sort_by(&{&1.points, &1.user_name})
       |> Enum.reverse()
       |> Enum.with_index()
       |> Enum.map(fn {m, idx} -> Map.put(m, :place, idx + 1) end)
@@ -30,7 +30,7 @@ defmodule Hunt.Activity.Leaderboard.OrderedLeaders do
         user.first_name,
         user.last_name
       ]
-      |> Enum.reject(& &1 == nil || &1 == "")
+      |> Enum.reject(&(&1 == nil || &1 == ""))
       |> Enum.join(" ")
 
     case name do

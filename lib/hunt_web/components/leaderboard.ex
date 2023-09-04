@@ -13,8 +13,11 @@ defmodule HuntWeb.Leaderboard do
           </.link>
         </div>
 
-        <ul class="flex-grow space-y-4" :if={@leaderboard}>
-          <li :for={entry <- @leaderboard} class={"border rounded px-4 py-3 flex items-center gap-4 text-xl #{if @user && entry.user_id == @user.id, do: "border-2 border-l-8 border-pink-600"}"}>
+        <ul :if={@leaderboard} class="flex-grow space-y-4">
+          <li
+            :for={entry <- @leaderboard}
+            class={"border rounded px-4 py-3 flex items-center gap-4 text-xl #{if @user && entry.user_id == @user.id, do: "border-2 border-l-8 border-pink-600"}"}
+          >
             <div class="flex-grow break-all line-clamp-1">
               <span class="font-bold"><%= entry.place %>.</span>
               <span class="ml-2"><%= entry.user_name %></span>
