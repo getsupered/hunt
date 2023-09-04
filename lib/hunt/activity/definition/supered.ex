@@ -57,14 +57,15 @@ defmodule Hunt.Activity.Supered do
                   points: 200,
                   component: &__MODULE__.use_supered/1,
                   completion: Hunt.Activity.Completion.Answer.expected(:any)
-                }
-                # %{
-                #   id: "d5705849-ec91-4edc-bdd6-99404416afbf",
-                #   title: "Create and Post How-To Video",
-                #   action: "",
-                #   points: 300,
-                #   component: &__MODULE__.post_video/1
-                # },
+                },
+                %{
+                  id: "d5705849-ec91-4edc-bdd6-99404416afbf",
+                  title: "Book a Supered Demo",
+                  action: "Already a customer? This is free then!",
+                  points: 150,
+                  component: &__MODULE__.book_demo/1,
+                  completion: Hunt.Activity.Completion.Answer.expected(["Get Supered: Demo", "Get Supered: Partner"])
+                },
               ]
               |> Enum.sort_by(& &1.title)
 
@@ -236,6 +237,54 @@ defmodule Hunt.Activity.Supered do
               Complete: How would you use Supered at your company?
             </label>
             <textarea required name="answer" class="w-full form-input" rows="3" placeholder="Give us a few sentences, we're curious!" />
+          </div>
+
+          <button class="btn btn-primary btn-big w-full block text-2xl" phx-disable-with="Thinking...">
+            Submit Answer
+          </button>
+        </.form>
+      </HuntWeb.LoggedInForm.wrap>
+    </div>
+    """
+  end
+
+  def book_demo(assigns) do
+    ~H"""
+    <div class="h-full flex flex-col">
+      <div class="flex-grow prose text-xl space-y-4">
+        <h2 class="max-w-[calc(100%-3rem)]"><%= @hunt.title %></h2>
+
+        <div>
+          <a href="https://meetings.hubspot.com/matt2549/supered-user-demo" target="_blank" class="btn btn-muted text-xl">
+            Book Demo: HubSpot User
+          </a>
+        </div>
+
+        <div>
+          <a href="https://meetings.hubspot.com/matt2549/supered-partner-demo" target="_blank" class="btn btn-muted text-xl">
+            Book Demo: HubSpot Partner
+          </a>
+        </div>
+
+        <div>
+          <span class="font-semibold">Points: </span>
+          <span><%= @hunt.points %>pts</span>
+        </div>
+
+        <div>
+          <span class="font-semibold">Already a customer? </span>
+          <span>Ask us for the passphrase and it's free points.</span>
+        </div>
+      </div>
+
+      <HuntWeb.LoggedInForm.wrap {assigns}>
+        <.form for={nil} class="pb-8" phx-submit="submit_answer">
+          <input type="hidden" name="activity_id" value={@hunt.id} />
+          <div class="mb-4">
+            <label class="font-semibold mb-2 block">
+              Complete: What are the first 3 words (plus symbol) of the meeting event title?
+            </label>
+            <input type="text" required name="answer" class="w-full form-input" placeholder="Include the :" />
           </div>
 
           <button class="btn btn-primary btn-big w-full block text-2xl" phx-disable-with="Thinking...">

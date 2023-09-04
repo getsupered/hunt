@@ -43,14 +43,6 @@ defmodule Hunt.Activity.Fun do
                   completion: :qr_code
                 },
                 %{
-                  id: "d87f44d4-d8f6-4060-907a-897ab25aaf88",
-                  title: "Sing 15 secs of Supered World w/ Wig",
-                  action: "Bring music to Matt's ears",
-                  points: 150,
-                  component: &__MODULE__.qr_at_sprocketeer/1,
-                  completion: :qr_code
-                },
-                %{
                   id: "7b7c7d75-cf55-4e96-b911-2202f62cfa3c",
                   title: "Collect 5 Conference Shirts",
                   action: "Can be from anywhere",

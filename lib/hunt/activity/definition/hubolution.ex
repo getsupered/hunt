@@ -43,11 +43,11 @@ defmodule Hunt.Activity.Hubolution do
                   completion: :qr_code
                 },
                 %{
-                  id: "fc3e481f-2b13-4dc7-8ac0-9cd2a32cd27a",
-                  title: "Get interviewed by \"The Mayor of INBOUND\"",
-                  action: "Tall guy, orange suit, loves HubSpot",
+                  id: "20aeef09-f040-4eda-bc7c-de1894f6e3e9",
+                  title: "Get \"The Mayor of INBOUND\"'s signature",
+                  action: "Better bring a pen!",
                   points: 300,
-                  component: &__MODULE__.mayor/1,
+                  component: &__MODULE__.mayor_signature/1,
                   completion: :image
                 },
                 %{
@@ -151,7 +151,7 @@ defmodule Hunt.Activity.Hubolution do
     """
   end
 
-  def mayor(assigns) do
+  def mayor_signature(assigns) do
     ~H"""
     <div class="h-full flex flex-col">
       <div class="flex-grow prose text-xl space-y-4">
@@ -159,12 +159,12 @@ defmodule Hunt.Activity.Hubolution do
 
         <div>
           <span class="font-semibold">Location: </span>
-          <span>This one's on you...</span>
+          <span>This one's on you...we recommend the afterparty.</span>
         </div>
 
         <div>
           <span class="font-semibold">Complete: </span>
-          <span>Take selfie with the mayor</span>
+          <span>Take picture of The Mayor's signature. Try it on a shirt, your hand, or a framed portrait of The Mayor.</span>
         </div>
 
         <div>
@@ -173,7 +173,7 @@ defmodule Hunt.Activity.Hubolution do
         </div>
       </div>
 
-      <HuntWeb.ImageButton.button {assigns} text="Upload Selfie" />
+      <HuntWeb.ImageButton.button {assigns} text="Upload Signature" />
     </div>
     """
   end
