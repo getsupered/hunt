@@ -156,8 +156,8 @@ defmodule Hunt.Activity do
       act = %{completion: :image} ->
         Repo.transaction(fn ->
           with {:ok, hunt} <- create_activity_completion(act, user, :pending, %{}),
-              {:ok, upload} <- create_image_upload(upload_params),
-              {:ok, hunt} <- Ecto.Changeset.change(hunt, image_upload_id: upload.id) |> Repo.update() do
+               {:ok, upload} <- create_image_upload(upload_params),
+               {:ok, hunt} <- Ecto.Changeset.change(hunt, image_upload_id: upload.id) |> Repo.update() do
             hunt
           else
             {:error, cs} -> Repo.rollback(cs)

@@ -22,13 +22,7 @@ defmodule HuntWeb.ImageUploader do
 
           <div class="p-4">
             <HuntWeb.LoggedInForm.wrap {assigns}>
-              <.live_component
-                :if={@open}
-                id="image_uploader_form"
-                module={HuntWeb.ImageUploaderForm}
-                user={@user}
-                activity_id={@open}
-              />
+              <.live_component :if={@open} id="image_uploader_form" module={HuntWeb.ImageUploaderForm} user={@user} activity_id={@open} />
             </HuntWeb.LoggedInForm.wrap>
           </div>
         </div>

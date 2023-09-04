@@ -110,16 +110,21 @@ defmodule Hunt.Activity.Hubolution do
         </div>
       </div>
 
-      <div class="pb-8">
-        <div class="mb-4">
-          <label class="font-semibold mb-2 block">Complete: In the announcements channel, what is the name signing off the message?</label>
-          <input type="text" placeholder="Hint: C.S." class="w-full form-input" />
-        </div>
+      <HuntWeb.LoggedInForm.wrap {assigns}>
+        <.form for={nil} class="pb-8" phx-submit="submit_answer">
+          <input type="hidden" name="activity_id" value={@hunt.id} />
+          <div class="mb-4">
+            <label class="font-semibold mb-2 block">
+              Complete: In the announcements channel, what is the name signing off the message?
+            </label>
+            <input required name="answer" type="text" placeholder="Hint: C.S." class="w-full form-input" />
+          </div>
 
-        <button class="btn btn-primary btn-big w-full block text-2xl">
-          Submit Answer
-        </button>
-      </div>
+          <button class="btn btn-primary btn-big w-full block text-2xl" phx-disable-with="Thinking...">
+            Submit Answer
+          </button>
+        </.form>
+      </HuntWeb.LoggedInForm.wrap>
     </div>
     """
   end
