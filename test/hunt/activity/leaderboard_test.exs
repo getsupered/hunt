@@ -6,21 +6,19 @@ defmodule Hunt.Activity.LeaderboardTest do
   test "a bunch of completed activities will fill in the leaderboard properly" do
     setup_random_completions(max_users: 1000)
 
-    :timer.tc(fn ->
-      {:ok, pid} = Leaderboard.start_link(name: nil)
-      verify_state(pid)
-    end)
+    {:ok, pid} = Leaderboard.start_link(name: nil, named_table?: false)
+    verify_state(pid)
   end
 
   test "the user completion can be updated" do
     setup_random_completions(max_users: 5)
-    {:ok, pid} = Leaderboard.start_link(name: nil)
+    {:ok, pid} = Leaderboard.start_link(name: nil, named_table?: false)
 
-    user_ids = setup_random_completions(max_users: 5)
+    users = setup_random_completions(max_users: 5)
 
-    for user_id <- user_ids do
-      summary = Hunt.Activity.completion_summary(user: %{id: user_id})
-      assert Leaderboard.update_user(summary, user_id, pid) == :ok
+    for user <- users do
+      summary = Hunt.Activity.completion_summary(user: user)
+      assert Leaderboard.update_user(summary, user, pid) == :ok
     end
 
     verify_state(pid)
@@ -31,26 +29,31 @@ defmodule Hunt.Activity.LeaderboardTest do
     num_completions = num_users * 15
 
     activity_ids = Hunt.Activity.activities() |> Enum.map(& &1.id)
-    user_ids = for _ <- 1..num_users, do: Ecto.UUID.generate()
+
+    users =
+      for _ <- 1..num_users do
+        {:ok, user} = Hunt.User.create_user(Ecto.UUID.generate(), Faker.Person.first_name(), Faker.Person.last_name())
+        user
+      end
 
     for _ <- 1..num_completions, reduce: [] do
       acc ->
-        user = Enum.random(user_ids)
+        user = Enum.random(users)
         activity = Enum.random(activity_ids)
 
         if {user, activity} in acc do
           acc
         else
-          create_fake_completion(user, activity)
-          [{user, activity} | acc]
+          create_fake_completion(user.id, activity)
+          [{user.id, activity} | acc]
         end
     end
 
-    user_ids
+    users
   end
 
   defp verify_state(pid) do
-    %{scores_by_user: scores_by_user} = :sys.get_state(pid)
+    %{scores_by_user: scores_by_user, ets: ets} = :sys.get_state(pid)
 
     users_with_completions =
       Repo.all(
@@ -67,8 +70,19 @@ defmodule Hunt.Activity.LeaderboardTest do
       computed_points = Hunt.Activity.total_points(completion_summary)
       completed_ids = Enum.flat_map(completion_summary, fn {_mod, %{ids: ids}} -> ids end)
 
+      assert %Hunt.User.Schema.User{} = score.user
       assert score.points == computed_points
       assert Enum.sort(score.completed_ids) == Enum.sort(completed_ids)
+    end
+
+    leaderboard = Hunt.Activity.Leaderboard.OrderedLeaders.from_ets(ets)
+
+    for entry <- leaderboard, reduce: %{points: 100_000} do
+      prev ->
+        assert entry.points <= prev.points
+        assert entry.user_id
+        assert entry.user_name
+        entry
     end
   end
 

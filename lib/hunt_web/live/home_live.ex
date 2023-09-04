@@ -129,7 +129,7 @@ defmodule HuntWeb.HomeLive do
   defp load_completion(socket = %{assigns: %{user: user}}) do
     summary = Hunt.Activity.completion_summary(user: user)
     # This will be self-correcting if there's any issues
-    Hunt.Activity.Leaderboard.update_user(summary, user.id)
+    Hunt.Activity.Leaderboard.update_user(summary, user)
 
     socket
     |> assign(:completion, summary)

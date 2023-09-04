@@ -15,7 +15,7 @@ defmodule Hunt.User do
     Repo.get(Schema.User, id)
   end
 
-  defp create_user(email, first_name, last_name) do
+  def create_user(email, first_name, last_name) do
     %{email: email, first_name: first_name, last_name: last_name}
     |> Schema.User.changeset()
     |> Repo.insert()

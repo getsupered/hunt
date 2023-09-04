@@ -7,27 +7,40 @@ defmodule Hunt.Activity.Leaderboard do
   @initial_score_by_user %{
     achievements: [],
     completed_ids: MapSet.new(),
-    points: 0
+    points: 0,
+    user: nil
   }
 
   def start_link(opts) do
     name = Keyword.get(opts, :name, __MODULE__)
-    GenServer.start_link(__MODULE__, [], name: name)
+    GenServer.start_link(__MODULE__, opts, name: name)
   end
 
-  def update_user(summary, user_id, server \\ __MODULE__) do
-    GenServer.call(server, {:update_user, summary, user_id})
+  def update_user(summary, user, server \\ __MODULE__) do
+    GenServer.call(server, {:update_user, summary, user})
   end
 
-  def init(_opts) do
-    {:ok, %{scores_by_user: %{}}, {:continue, :load_initial}}
+  def init(opts) do
+    ets_opts =
+      if Keyword.get(opts, :named_table?, true) do
+        [:named_table, :protected, :set]
+      else
+        [:protected, :set]
+      end
+
+    ets = :ets.new(:leaderboard, ets_opts)
+
+    {:ok, %{scores_by_user: %{}, ets: ets}, {:continue, :load_initial}}
   end
 
   def handle_continue(:load_initial, state) do
-    {:noreply, load_pointed_completions(state)}
+    state = load_pointed_completions(state)
+    Hunt.Activity.Leaderboard.OrderedLeaders.update_from_leaderboard_state(state)
+
+    {:noreply, state}
   end
 
-  def handle_call({:update_user, summary, user_id}, _from, state) do
+  def handle_call({:update_user, summary, user}, _from, state) do
     completed_ids = Map.values(summary) |> Enum.flat_map(& &1.ids)
 
     achievements =
@@ -40,10 +53,11 @@ defmodule Hunt.Activity.Leaderboard do
     new_score = %{
       achievements: achievements,
       completed_ids: MapSet.new(completed_ids),
-      points: Hunt.Activity.total_points(summary)
+      points: Hunt.Activity.total_points(summary),
+      user: user
     }
 
-    new_scores_by_user = Map.put(state.scores_by_user, user_id, new_score)
+    new_scores_by_user = Map.put(state.scores_by_user, user.id, new_score)
     state = %{state | scores_by_user: new_scores_by_user}
 
     {:reply, :ok, state}
@@ -57,28 +71,35 @@ defmodule Hunt.Activity.Leaderboard do
         c in Hunt.Activity.Schema.CompletedActivity,
         where: c.approval_state in [:pending, :approved]
       )
-      |> Repo.stream(max_rows: 100)
+      |> Repo.stream(max_rows: 200)
 
     {:ok, state} =
       Repo.transaction(fn ->
-        Enum.reduce(stream, state, fn completion, state ->
-          case activities_by_id[completion.activity_id] do
-            nil ->
-              state
+        stream
+        |> Stream.chunk_every(200)
+        |> Enum.reduce(state, fn completions, state ->
+          completions = Repo.preload(completions, [:user])
 
-            act ->
-              existing = state.scores_by_user[completion.user_id] || @initial_score_by_user
+          Enum.reduce(completions, state, fn completion, state ->
+            case activities_by_id[completion.activity_id] do
+              nil ->
+                state
 
-              new_score =
-                Map.merge(existing, %{
-                  completed_ids: MapSet.put(existing.completed_ids, act.id),
-                  points: existing.points + act.points
-                })
+              act ->
+                existing = state.scores_by_user[completion.user_id] || @initial_score_by_user
 
-              new_scores_by_user = Map.put(state.scores_by_user, completion.user_id, new_score)
+                new_score =
+                  Map.merge(existing, %{
+                    completed_ids: MapSet.put(existing.completed_ids, act.id),
+                    points: existing.points + act.points,
+                    user: completion.user
+                  })
 
-              %{state | scores_by_user: new_scores_by_user}
-          end
+                new_scores_by_user = Map.put(state.scores_by_user, completion.user_id, new_score)
+
+                %{state | scores_by_user: new_scores_by_user}
+            end
+          end)
         end)
       end)
 

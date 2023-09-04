@@ -35,18 +35,20 @@ defmodule Seed do
   end
 end
 
-random_users = for _ <- 1..100 do
-  {:ok, user} = Hunt.User.find_or_create_user(
-    auth: %{
-      info: %{
-        email: Ecto.UUID.generate() <> "@supered.io",
-        first_name: Faker.Name.first_name(),
-        last_name: Faker.Name.last_name()
-      }
-    }
-  )
+random_users =
+  for _ <- 1..100 do
+    {:ok, user} =
+      Hunt.User.find_or_create_user(
+        auth: %{
+          info: %{
+            email: Ecto.UUID.generate() <> "@supered.io",
+            first_name: Faker.Name.first_name(),
+            last_name: Faker.Name.last_name()
+          }
+        }
+      )
 
-  user
-end
+    user
+  end
 
 Seed.setup_random_completions(users: random_users)
