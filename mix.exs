@@ -48,7 +48,8 @@ defmodule Hunt.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:qr_code, "~> 3.0.0"},
       {:ueberauth, "~> 0.10"},
-      {:ueberauth_google, "~> 0.10"}
+      {:ueberauth_google, "~> 0.10"},
+      {:faker, "~> 0.17", only: [:dev, :test]}
     ]
   end
 
