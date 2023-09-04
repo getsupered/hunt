@@ -19,8 +19,8 @@ defmodule Hunt.Activity do
   ]
 
   @activities Enum.flat_map(@activity_modules, fn mod ->
-    Enum.map(mod.activities(), & Map.put(&1, :module, mod))
-  end)
+                Enum.map(mod.activities(), &Map.put(&1, :module, mod))
+              end)
 
   def activity_modules, do: @activity_modules
   def activities, do: @activities
@@ -32,7 +32,7 @@ defmodule Hunt.Activity do
       mod_activities = Map.get(activities, mod, [])
       mod_activity_count = length(mod.activities())
 
-      pointed_activities = Enum.filter(mod_activities, & &1.approval_state in [:pending, :approved])
+      pointed_activities = Enum.filter(mod_activities, &(&1.approval_state in [:pending, :approved]))
       pointed_activities_count = length(pointed_activities)
 
       achievement? = mod_activity_count == pointed_activities_count
@@ -42,7 +42,7 @@ defmodule Hunt.Activity do
       completion = %{
         ids: Enum.map(mod_activities, & &1.activity_id),
         achievement: achievement?,
-        count: (if achievement?, do: pointed_activities_count + 1, else: pointed_activities_count),
+        count: if(achievement?, do: pointed_activities_count + 1, else: pointed_activities_count),
         activity_count: pointed_activities_count,
         points: points
       }
@@ -66,7 +66,7 @@ defmodule Hunt.Activity do
         act -> %{completion | activity_module: act.module, activity_points: act.points}
       end
     end)
-    |> Enum.reject(& is_nil/1)
+    |> Enum.reject(&is_nil/1)
   end
 
   def submit_answer(_params, user: nil) do
@@ -96,12 +96,16 @@ defmodule Hunt.Activity do
   end
 
   defp create_activity_completion(activity, user, state, metadata) when state in [:pending, :approved] do
-    params = maybe_merge_state_params(%{
-      activity_id: activity.id,
-      user_id: user.id,
-      approval_state: state,
-      metadata: metadata
-    }, state)
+    params =
+      maybe_merge_state_params(
+        %{
+          activity_id: activity.id,
+          user_id: user.id,
+          approval_state: state,
+          metadata: metadata
+        },
+        state
+      )
 
     params
     |> CompletedActivity.changeset()
@@ -110,13 +114,13 @@ defmodule Hunt.Activity do
       stale_error_field: :activity_id,
       stale_error_message: "has already been approved",
       conflict_target: [:user_id, :activity_id],
-      on_conflict: (
-        from c in CompletedActivity,
-        where: c.approval_state in [:pending, :rejected],
-        update: [
-          set: ^Enum.into(params, [])
-        ]
-      )
+      on_conflict:
+        from(c in CompletedActivity,
+          where: c.approval_state in [:pending, :rejected],
+          update: [
+            set: ^Enum.into(params, [])
+          ]
+        )
     )
   end
 

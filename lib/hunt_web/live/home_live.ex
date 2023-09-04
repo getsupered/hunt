@@ -8,13 +8,7 @@ defmodule HuntWeb.HomeLive do
         <.live_component module={HuntWeb.Header} id="header" />
 
         <main class="-mt-40">
-          <.live_component
-            module={HuntWeb.HuntCarousel}
-            id="carousel"
-            user={@user}
-            hunt_mods={@hunt_mods}
-            completion={@completion}
-          />
+          <.live_component module={HuntWeb.HuntCarousel} id="carousel" user={@user} hunt_mods={@hunt_mods} completion={@completion} />
         </main>
 
         <div class={"z-10 fixed max-w-2xl mx-auto bottom-0 top-40 left-0 right-0 transition-all #{if @hunt, do: "translate-y-0", else: "translate-y-full"}"}>
@@ -105,6 +99,10 @@ defmodule HuntWeb.HomeLive do
 
   defp completed_notification(socket = %{assigns: %{completion: completion}}) do
     total_points = completion |> Map.values() |> Enum.map(& &1.points) |> Enum.sum()
-    push_event(socket, "notification", %{type: "success", text: "Boom! Your answer was accepted. The points are yours. You have #{total_points} points."})
+
+    push_event(socket, "notification", %{
+      type: "success",
+      text: "Boom! Your answer was accepted. The points are yours. You have #{total_points} points."
+    })
   end
 end
