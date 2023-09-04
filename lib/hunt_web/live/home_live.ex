@@ -62,29 +62,34 @@ defmodule HuntWeb.HomeLive do
   end
 
   def handle_event("submit_answer", params, socket) do
-    now = DateTime.utc_now() |> DateTime.to_unix(:millisecond) |> to_string()
+    socket =
+      Hunt.Activity.submit_answer(params, user: socket.assigns.user)
+      |> handle_activity_result(socket, "Your answer was accepted. The points are yours!", true)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("qrscan", %{"text" => text}, socket) do
+    uri = URI.parse(text)
+
+    hunt_id =
+      case uri.path do
+        "/hunt/" <> id -> id
+        _ -> nil
+      end
+
+    close_slideout? =
+      case socket.assigns do
+        %{hunt: %{id: current_hunt_id}} -> current_hunt_id == hunt_id
+        _ -> false
+      end
+
+    activity = Hunt.Activity.find_activity(hunt_id) || %{}
+    query = Plug.Conn.Query.decode(uri.query || "")
 
     socket =
-      case Hunt.Activity.submit_answer(params, user: socket.assigns.user) do
-        {:ok, %{approval_state: :approved}} ->
-          socket
-          |> load_completion()
-          |> completed_notification()
-          |> push_patch(to: HuntWeb.uri_path(socket.assigns.uri, %{"path" => "/"}))
-
-        {:ok, %{approval_state: :pending}} ->
-          socket
-          |> load_completion()
-          |> completed_notification()
-          |> push_patch(to: HuntWeb.uri_path(socket.assigns.uri, %{"path" => "/"}))
-
-        {:error, why} when is_binary(why) ->
-          push_event(socket, "notification", %{type: "error", text: why})
-
-        {:error, cs = %Ecto.Changeset{}} ->
-          why = HuntWeb.CoreComponents.translate_errors(cs)
-          push_event(socket, "notification", %{type: "error", text: why})
-      end
+      Hunt.Activity.submit_qr_code(hunt_id, query["code"], user: socket.assigns.user)
+      |> handle_activity_result(socket, "#{activity[:title]} complete. The points are yours!", close_slideout?)
 
     {:noreply, socket}
   end
@@ -97,12 +102,43 @@ defmodule HuntWeb.HomeLive do
     assign(socket, :completion, Hunt.Activity.completion_summary(user: user))
   end
 
-  defp completed_notification(socket = %{assigns: %{completion: completion}}) do
+  defp handle_activity_result(result, socket, msg, close_slideout?) do
+    maybe_close_slideout = fn socket ->
+      if close_slideout? do
+        push_patch(socket, to: HuntWeb.uri_path(socket.assigns.uri, %{"path" => "/"}))
+      else
+        socket
+      end
+    end
+
+    case result do
+      {:ok, %{approval_state: :approved}} ->
+        socket
+        |> load_completion()
+        |> completed_notification(msg)
+        |> maybe_close_slideout.()
+
+      {:ok, %{approval_state: :pending}} ->
+        socket
+        |> load_completion()
+        |> completed_notification(msg)
+        |> maybe_close_slideout.()
+
+      {:error, why} when is_binary(why) ->
+        push_event(socket, "notification", %{type: "error", text: why})
+
+      {:error, cs = %Ecto.Changeset{}} ->
+        why = HuntWeb.CoreComponents.translate_errors(cs)
+        push_event(socket, "notification", %{type: "error", text: why})
+    end
+  end
+
+  defp completed_notification(socket = %{assigns: %{completion: completion}}, msg) do
     total_points = completion |> Map.values() |> Enum.map(& &1.points) |> Enum.sum()
 
     push_event(socket, "notification", %{
       type: "success",
-      text: "Boom! Your answer was accepted. The points are yours. You have #{total_points} points."
+      text: "Boom! #{msg} You have #{total_points} points."
     })
   end
 end

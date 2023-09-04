@@ -45,7 +45,7 @@ defmodule Hunt.Activity do
                end
              end)
            end)
-           |> Enum.reject(& is_nil/1)
+           |> Enum.reject(&is_nil/1)
            |> Map.new()
 
   def activity_modules, do: @activity_modules
@@ -122,6 +122,24 @@ defmodule Hunt.Activity do
 
           false ->
             {:error, "Wrong answer, give it another try"}
+        end
+    end
+  end
+
+  def submit_qr_code(_id, _code, user: nil) do
+    {:error, "Must log in first"}
+  end
+
+  def submit_qr_code(id, code, user: user) do
+    case find_activity(id) do
+      nil ->
+        {:error, "Error completing hunt: missing #{id}"}
+
+      act = %{completion: :qr_code} ->
+        if to_string(:erlang.phash2(act.id)) == to_string(code) do
+          create_activity_completion(act, user, :approved, %{})
+        else
+          {:error, "Error completing hunt: invalid code"}
         end
     end
   end

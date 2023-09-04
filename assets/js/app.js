@@ -119,6 +119,7 @@ const hooks = {
         )
 
         this.html5QrcodeScanner.render((text) => {
+          this.pushEvent('qrscan', { text })
           this.cleanUpScanner()
           this.el.children[0].classList.remove('!translate-y-0')
         }, () => null)
