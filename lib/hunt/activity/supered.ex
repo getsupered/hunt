@@ -96,7 +96,7 @@ defmodule Hunt.Activity.Supered do
             <input required name="answer" type="text" placeholder="Hint: ViS" class="w-full form-input" />
           </div>
 
-          <button class="btn btn-primary btn-big w-full block text-2xl">
+          <button class="btn btn-primary btn-big w-full block text-2xl" phx-disable-with="Thinking...">
             Submit Answer
           </button>
         </.form>
@@ -131,7 +131,7 @@ defmodule Hunt.Activity.Supered do
             <input required name="answer" type="text" placeholder="Hint: L" class="w-full form-input" />
           </div>
 
-          <button class="btn btn-primary btn-big w-full block text-2xl">
+          <button class="btn btn-primary btn-big w-full block text-2xl" phx-disable-with="Thinking...">
             Submit Answer
           </button>
         </.form>
@@ -166,7 +166,7 @@ defmodule Hunt.Activity.Supered do
             <input required name="answer" type="text" placeholder="Hint: SF" class="w-full form-input" />
           </div>
 
-          <button class="btn btn-primary btn-big w-full block text-2xl">
+          <button class="btn btn-primary btn-big w-full block text-2xl" phx-disable-with="Thinking...">
             Submit Answer
           </button>
         </.form>
@@ -238,7 +238,7 @@ defmodule Hunt.Activity.Supered do
             <textarea required name="answer" class="w-full form-input" rows="3" placeholder="Give us a few sentences, we're curious!" />
           </div>
 
-          <button class="btn btn-primary btn-big w-full block text-2xl">
+          <button class="btn btn-primary btn-big w-full block text-2xl" phx-disable-with="Thinking...">
             Submit Answer
           </button>
         </.form>

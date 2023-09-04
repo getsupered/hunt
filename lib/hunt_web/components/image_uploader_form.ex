@@ -8,7 +8,7 @@ defmodule HuntWeb.ImageUploaderForm do
         <.live_file_input upload={@uploads.image} class="form-input w-full" />
 
         <div class="mt-4">
-          <button type="submit" class="btn btn-primary btn-big w-full block text-2xl">Upload</button>
+          <button type="submit" phx-disable-with="Uploading..." class="btn btn-primary btn-big w-full block text-2xl">Upload</button>
         </div>
       </form>
     </div>
