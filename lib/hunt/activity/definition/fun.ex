@@ -39,24 +39,27 @@ defmodule Hunt.Activity.Fun do
                   title: "Supered sticker on your device",
                   action: "@ Sprocketeer Lounge",
                   points: 75,
-                  component: &__MODULE__.qr_at_sprocketeer/1,
-                  completion: :qr_code
+                  component: &__MODULE__.image/1,
+                  completion: :image,
+                  text: "Upload a photo of your sticker"
                 },
                 %{
                   id: "7b7c7d75-cf55-4e96-b911-2202f62cfa3c",
                   title: "Collect 5 Conference Shirts",
                   action: "Can be from anywhere",
                   points: 150,
-                  component: &__MODULE__.shirts/1,
-                  completion: :image
+                  component: &__MODULE__.image/1,
+                  completion: :image,
+                  text: "Upload a photo of your shirts"
                 },
                 %{
                   id: "6ecfb3b1-2e94-404c-87b5-b7b22a8dea72",
                   title: "Wear a Supered Shirt",
                   action: "Looking good, Supered Star",
                   points: 150,
-                  component: &__MODULE__.qr_at_sprocketeer/1,
-                  completion: :qr_code
+                  component: &__MODULE__.image/1,
+                  completion: :image,
+                  text: "Upload a photo of your awesome shirt"
                 },
                 %{
                   id: "c1b20a9c-71b6-4d44-9b19-c184075c66b3",
@@ -158,7 +161,7 @@ defmodule Hunt.Activity.Fun do
     """
   end
 
-  def shirts(assigns) do
+  def image(assigns) do
     ~H"""
     <div class="h-full flex flex-col">
       <div class="flex-grow prose text-xl space-y-4">
@@ -166,7 +169,7 @@ defmodule Hunt.Activity.Fun do
 
         <div>
           <span class="font-semibold">Complete: </span>
-          <span>Upload an image of your shirts</span>
+          <span><%= @hunt.text %></span>
         </div>
 
         <div>
