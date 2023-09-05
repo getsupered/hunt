@@ -1,5 +1,6 @@
 defmodule Hunt.Activity.Leaderboard do
   use GenServer
+  require Logger
 
   import Ecto.Query
   alias Hunt.Repo
@@ -50,6 +51,8 @@ defmodule Hunt.Activity.Leaderboard do
   end
 
   def handle_info({:update_user, summary, user}, state) do
+    Logger.info("#{__MODULE__} update user_id=#{user.id}")
+
     completed_ids = Map.values(summary) |> Enum.flat_map(& &1.ids)
 
     achievements =
