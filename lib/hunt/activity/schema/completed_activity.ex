@@ -18,6 +18,7 @@ defmodule Hunt.Activity.Schema.CompletedActivity do
 
     field :activity_module, :any, virtual: true
     field :activity_points, :integer, virtual: true, default: 0
+    field :activity, :any, virtual: true
 
     timestamps()
   end

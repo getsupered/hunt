@@ -65,7 +65,7 @@ defmodule Hunt.Activity.Supered do
                   points: 150,
                   component: &__MODULE__.book_demo/1,
                   completion: Hunt.Activity.Completion.Answer.expected(["Get Supered: Demo", "Get Supered: Partner"])
-                },
+                }
               ]
               |> Enum.sort_by(& &1.title)
 

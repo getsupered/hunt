@@ -26,8 +26,8 @@ defmodule Hunt.User do
 
   defp detect_admin(user) do
     case user do
-      {:ok, %Schema.User{email: email}} -> {:ok, %{user | admin: String.ends_with?(email, "@supered.io")}}
-      %Schema.User{email: email} -> %{user | admin: String.ends_with?(email, "@supered.io")}
+      {:ok, user = %Schema.User{email: email}} -> {:ok, %{user | admin: String.ends_with?(email, "@supered.io")}}
+      user = %Schema.User{email: email} -> %{user | admin: String.ends_with?(email, "@supered.io")}
       ret -> ret
     end
   end

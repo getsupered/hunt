@@ -234,6 +234,12 @@ defmodule Hunt.Activity do
     |> Hunt.Repo.insert()
   end
 
+  def approve_answer(completed_activity, by_user: user) do
+    completed_activity
+    |> Ecto.Changeset.change(approval_state: :approved, approval_updated_at: DateTime.utc_now(), approval_by_id: user.id)
+    |> Repo.update()
+  end
+
   def reject_answer(completed_activity, by_user: user) do
     completed_activity
     |> Ecto.Changeset.change(approval_state: :rejected, approval_updated_at: DateTime.utc_now(), approval_by_id: user.id)
@@ -245,5 +251,30 @@ defmodule Hunt.Activity do
       :approved -> Map.merge(params, %{approval_updated_at: DateTime.utc_now(), approval_by_id: @system_uuid})
       _ -> params
     end
+  end
+
+  def pending_activity_count do
+    from(
+      c in CompletedActivity,
+      where: c.approval_state == :pending
+    )
+    |> Repo.aggregate(:count)
+  end
+
+  def pending_activities do
+    from(
+      c in CompletedActivity,
+      where: c.approval_state == :pending,
+      preload: [:user],
+      limit: 1,
+      order_by: [
+        asc: c.inserted_at
+      ]
+    )
+    |> Repo.all()
+    |> Enum.map(fn pending ->
+      activity = Enum.find(activities(), &(&1.id == pending.activity_id))
+      %{pending | activity: activity}
+    end)
   end
 end

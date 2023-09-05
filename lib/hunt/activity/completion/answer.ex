@@ -14,6 +14,6 @@ defmodule Hunt.Activity.Completion.Answer do
     expected = List.wrap(expected)
     answer = Map.get(params, "answer", "") |> String.downcase()
 
-    Enum.any?(expected, & String.downcase(&1) == answer)
+    Enum.any?(expected, &(String.downcase(&1) == answer))
   end
 end

@@ -13,7 +13,7 @@ defmodule HuntWeb.Shirt do
           </.link>
         </div>
 
-        <%= if @user.redeemed_shirt_at do %>
+        <%= if @user && @user.redeemed_shirt_at do %>
           <div>
             Nice! You got your shirt.
           </div>
@@ -25,7 +25,9 @@ defmodule HuntWeb.Shirt do
               </p>
 
               <%= if @confirm do %>
-                <button class="btn btn-primary w-full text-2xl" phx-click="redeem_confirm" phx-target={@myself}>Confirm, you're picking up your shirt now</button>
+                <button class="btn btn-primary w-full text-2xl" phx-click="redeem_confirm" phx-target={@myself}>
+                  Confirm, you're picking up your shirt now
+                </button>
               <% else %>
                 <button class="btn btn-primary w-full text-2xl" phx-click="redeem_1" phx-target={@myself}>Redeem Shirt</button>
               <% end %>

@@ -20,7 +20,10 @@ defmodule HuntWeb.Router do
     live "/", HomeLive
     live "/hunt/:hunt_id", HomeLive
     live "/admin", AdminListLive
+    live "/admin/pending", AdminPendingLive
     live "/admin/:hunt_id", AdminListLive
+
+    get "/images/:id", ImageController, :serve
   end
 
   scope "/auth", HuntWeb do
