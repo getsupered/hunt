@@ -53,6 +53,7 @@ defmodule HuntWeb.HomeLive do
 
   def handle_params(params, uri, socket) do
     leaderboard_changed? = params["leaderboard"] != (socket.assigns[:params] || %{})["leaderboard"]
+    prizes_changed? = params["prizes"] != (socket.assigns[:params] || %{})["prizes"]
 
     socket =
       socket
@@ -75,6 +76,10 @@ defmodule HuntWeb.HomeLive do
 
     if leaderboard_changed? do
       send_update(HuntWeb.Leaderboard, id: "leaderboard", open?: params["leaderboard"])
+    end
+
+    if prizes_changed? do
+      send_update(HuntWeb.Prizes, id: "prizes", open?: params["prizes"])
     end
 
     {:noreply, socket}

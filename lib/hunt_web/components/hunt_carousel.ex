@@ -45,6 +45,15 @@ defmodule HuntWeb.HuntCarousel do
                     <button class="btn btn-primary block w-full text-center">Login with Supered</button>
                   <% end %>
                 </li>
+
+                <li>
+                  <.link
+                    patch={~p"/?prizes=open"}
+                    class="rounded px-4 py-3 dropped-border-sm btn btn-muted flex items-center w-full text-center gap-2 text-xl"
+                  >
+                    <.icon name="hero-gift" class="h-6 w-6" /> Prizes
+                  </.link>
+                </li>
               </ul>
             </li>
 
