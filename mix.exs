@@ -49,7 +49,8 @@ defmodule Hunt.MixProject do
       {:qr_code, "~> 3.0.0"},
       {:ueberauth, "~> 0.10"},
       {:ueberauth_google, "~> 0.10"},
-      {:faker, "~> 0.17", only: [:dev, :test]}
+      {:faker, "~> 0.17", only: [:dev, :test]},
+      {:dns_cluster, "~> 0.1.0"}
     ]
   end
 

@@ -106,4 +106,6 @@ if config_env() == :prod do
         ]
       }
     ]
+
+  config :hunt, dns_cluster_query: "hunt.internal"
 end
