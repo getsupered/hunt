@@ -15,7 +15,7 @@ defmodule HuntWeb.AdminListLive do
               <li :for={act <- hunt_mod.activities()}>
                 <div class="flex items-center gap-4">
                   <h3 class="text-lg font-semibold flex-grow"><%= act.title %></h3>
-                  <.link class="btn btn-muted btn-sm" patch={~p"/admin/detail/#{act.id}"}>Open</.link>
+                  <.link class="btn btn-muted btn-sm" patch={~p"/admin/#{act.id}"}>Open</.link>
                 </div>
               </li>
             </ul>
@@ -26,7 +26,7 @@ defmodule HuntWeb.AdminListLive do
           <div class="relative h-full bg-white mx-4 rounded-t-xl p-4 overflow-auto dropped-border !border-b-0">
             <%= if @hunt do %>
               <div class="absolute right-4 top-4">
-                <.link patch={HuntWeb.uri_path(@uri, %{"path" => "/admin/detail"})} class="touch-manipulation">
+                <.link patch={HuntWeb.uri_path(@uri, %{"path" => "/admin"})} class="touch-manipulation">
                   <.icon name="hero-x-mark" class="h-10 w-10" />
                 </.link>
               </div>

@@ -19,8 +19,8 @@ defmodule HuntWeb.Router do
 
     live "/", HomeLive
     live "/hunt/:hunt_id", HomeLive
-    live "/admin/detail", AdminListLive
-    live "/admin/detail/:hunt_id", AdminListLive
+    live "/admin", AdminListLive
+    live "/admin/:hunt_id", AdminListLive
   end
 
   scope "/auth", HuntWeb do
