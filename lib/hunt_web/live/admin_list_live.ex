@@ -8,6 +8,15 @@ defmodule HuntWeb.AdminListLive do
         <.live_component module={HuntWeb.Header} id="header" />
 
         <main class="-mt-40">
+          <div class="mx-8 mb-8">
+            <.link
+              patch={~p"/admin/pending"}
+              class="rounded px-4 py-3 dropped-border-sm btn btn-muted flex items-center w-full text-center gap-2 text-xl"
+            >
+              <%= @pending_count %> Pending Review
+            </.link>
+          </div>
+
           <div :for={hunt_mod <- @hunt_mods} class="mx-8 mb-8 p-4 rounded-xl bg-white dropped-border overflow-hidden">
             <h2 class="text-2xl font-bold mb-4"><%= hunt_mod.title() %></h2>
 
@@ -67,6 +76,7 @@ defmodule HuntWeb.AdminListLive do
     socket =
       socket
       |> assign(:hunt_mods, Hunt.Activity.activity_modules())
+      |> assign(:pending_count, Hunt.Activity.pending_activity_count())
 
     case socket.assigns.user do
       %{admin: true} -> {:ok, socket}

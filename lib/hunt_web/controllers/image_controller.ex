@@ -3,16 +3,16 @@ defmodule HuntWeb.ImageController do
 
   def serve(conn, %{"id" => image_id}) do
     case load_user(conn) do
-      nil ->
-        redirect(conn, to: "/")
-
-      user ->
+      %{admin: true} ->
         image = Hunt.Repo.get!(Hunt.Activity.Schema.ImageUpload, image_id)
 
         conn
         # hard-coded type, needs changed for different image types
         |> put_resp_content_type("image/jpeg", "utf-8")
         |> send_resp(200, image.image_binary)
+
+      nil ->
+        redirect(conn, to: "/")
     end
   end
 

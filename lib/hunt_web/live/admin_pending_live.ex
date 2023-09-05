@@ -22,6 +22,15 @@ defmodule HuntWeb.AdminPendingLive do
             </div>
           </div>
 
+          <div class="mx-8 mb-8">
+            <.link
+              patch={~p"/admin"}
+              class="rounded px-4 py-3 dropped-border-sm btn btn-muted flex items-center w-full text-center gap-2 text-xl"
+            >
+              Admin Panel
+            </.link>
+          </div>
+
           <div :for={hunt <- @pending} class="mx-8 mb-8 p-4 rounded-xl bg-white dropped-border overflow-hidden space-y-2">
             <div>
               <span class="font-semibold">User: </span>
