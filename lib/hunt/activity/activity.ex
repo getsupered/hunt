@@ -7,15 +7,15 @@ defmodule Hunt.Activity do
   @system_uuid "00000000-0000-0000-0000-000000000000"
 
   @activity_modules [
+    Hunt.Activity.Supered,
+    Hunt.Activity.Social,
     Hunt.Activity.Lounge,
     Hunt.Activity.Attend,
-    Hunt.Activity.Social,
+    Hunt.Activity.Hubolution,
     Hunt.Activity.Selfie1,
     Hunt.Activity.Selfie2,
     Hunt.Activity.Selfie3,
-    Hunt.Activity.Fun,
-    Hunt.Activity.Hubolution,
-    Hunt.Activity.Supered
+    Hunt.Activity.Fun
   ]
 
   @activities Enum.flat_map(@activity_modules, fn mod ->
