@@ -31,9 +31,9 @@ defmodule HuntWeb.HuntCarousel do
                   </li>
                 <% end %>
 
-                <li class="rounded px-4 py-3 dropped-border-sm flex items-start gap-4">
+                <li class="rounded px-4 py-3 dropped-border-sm flex items-start gap-4 text-xl">
                   <%= if @user do %>
-                    <div class="flex-grow">
+                    <div class="prose text-xl flex-grow">
                       You're logged in as <%= @user.email %>
                     </div>
 
@@ -53,6 +53,23 @@ defmodule HuntWeb.HuntCarousel do
                   >
                     <.icon name="hero-gift" class="h-6 w-6" /> Prizes
                   </.link>
+                </li>
+
+                <li>
+                  <%= if @points >= Hunt.Activity.points_for_shirt() do %>
+                    <.link
+                      patch={~p"/?shirt=open"}
+                      class="rounded px-4 py-3 dropped-border-sm btn btn-muted flex items-center w-full text-center gap-2 text-xl"
+                    >
+                      <.icon name="hero-gift" class="h-6 w-6" /> Redeem Tee Shirt
+                    </.link>
+                  <% else %>
+                    <div class="prose rounded px-4 py-3 dropped-border-sm w-full text-xl">
+                      <p>
+                        Collect <%= Hunt.Activity.points_for_shirt() - @points %> more points to claim your Supered shirt!
+                      </p>
+                    </div>
+                  <% end %>
                 </li>
               </ul>
             </li>

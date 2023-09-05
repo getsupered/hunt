@@ -9,6 +9,7 @@ defmodule Hunt.User.Schema.User do
     field :email, :string
     field :first_name, :string
     field :last_name, :string
+    field :redeemed_shirt_at, :utc_datetime_usec
 
     timestamps()
   end

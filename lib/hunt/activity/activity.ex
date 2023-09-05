@@ -55,6 +55,28 @@ defmodule Hunt.Activity do
     Map.fetch!(@qrcodes, activity.id)
   end
 
+  def points_for_shirt do
+    1000
+  end
+
+  def redeem_shirt(user) do
+    user = Hunt.User.get_user(user.id)
+    summary = completion_summary(user: user)
+    points = total_points(summary)
+
+    cond do
+      user.redeemed_shirt_at ->
+        {:error, "Already redeemed"}
+
+      points < points_for_shirt() ->
+        {:error, "Not enough points"}
+
+      true ->
+        Ecto.Changeset.change(user, redeemed_shirt_at: DateTime.utc_now()) |> Repo.update!()
+        :ok
+    end
+  end
+
   def qr_code(activity, :base64) do
     {:ok, base64} = QRCode.to_base64({:ok, Map.fetch!(@qrcodes, activity.id)})
     "data:image/svg+xml; base64, " <> base64

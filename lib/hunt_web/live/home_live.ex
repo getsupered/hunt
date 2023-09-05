@@ -33,6 +33,11 @@ defmodule HuntWeb.HomeLive do
         </div>
       </div>
     </div>
+
+    <.live_component id="image_uploader" module={HuntWeb.ImageUploader} user={@user} />
+    <.live_component id="leaderboard" module={HuntWeb.Leaderboard} user={@user} uri={@uri} />
+    <.live_component id="prizes" module={HuntWeb.Prizes} user={@user} uri={@uri} />
+    <.live_component id="shirt" module={HuntWeb.Shirt} user={@user} uri={@uri} points={@total_points} />
     """
   end
 
@@ -54,6 +59,7 @@ defmodule HuntWeb.HomeLive do
   def handle_params(params, uri, socket) do
     leaderboard_changed? = params["leaderboard"] != (socket.assigns[:params] || %{})["leaderboard"]
     prizes_changed? = params["prizes"] != (socket.assigns[:params] || %{})["prizes"]
+    shirt_changed? = params["shirt"] != (socket.assigns[:params] || %{})["shirt"]
 
     socket =
       socket
@@ -74,13 +80,9 @@ defmodule HuntWeb.HomeLive do
           socket
       end
 
-    if leaderboard_changed? do
-      send_update(HuntWeb.Leaderboard, id: "leaderboard", open?: params["leaderboard"])
-    end
-
-    if prizes_changed? do
-      send_update(HuntWeb.Prizes, id: "prizes", open?: params["prizes"])
-    end
+    if leaderboard_changed?, do: send_update(HuntWeb.Leaderboard, id: "leaderboard", open?: params["leaderboard"])
+    if prizes_changed?, do: send_update(HuntWeb.Prizes, id: "prizes", open?: params["prizes"])
+    if shirt_changed?, do: send_update(HuntWeb.Shirt, id: "shirt", open?: params["shirt"])
 
     {:noreply, socket}
   end
@@ -132,6 +134,10 @@ defmodule HuntWeb.HomeLive do
 
   def handle_info(:clear_flash, socket) do
     {:noreply, clear_flash(socket)}
+  end
+
+  def handle_info(:reload_user, socket = %{assigns: %{user: user}}) do
+    {:noreply, assign(socket, :user, Hunt.User.get_user(user.id))}
   end
 
   def handle_info({:activity_result, result, msg}, socket) do

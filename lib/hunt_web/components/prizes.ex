@@ -48,6 +48,11 @@ defmodule HuntWeb.Prizes do
             <div class="font-bold">1500 Points</div>
             <div class="text-sm">Enter drawing for Supered backpack (must pick up at INBOUND23)</div>
           </li>
+
+          <li class="border rounded px-4 py-3 border-pink-600">
+            <div class="font-bold"><%= Hunt.Activity.points_for_shirt() %> Points</div>
+            <div class="text-sm">Pick up your Supered Shirt at Sprocketeer Lounge</div>
+          </li>
         </ul>
       </div>
     </div>
