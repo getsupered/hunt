@@ -51,10 +51,6 @@ defmodule Hunt.Activity do
   def activity_modules, do: @activity_modules
   def activities, do: @activities
 
-  def qr_code(activity, :svg) do
-    Map.fetch!(@qrcodes, activity.id)
-  end
-
   def points_for_shirt do
     1000
   end
@@ -75,6 +71,10 @@ defmodule Hunt.Activity do
         Ecto.Changeset.change(user, redeemed_shirt_at: DateTime.utc_now()) |> Repo.update!()
         :ok
     end
+  end
+
+  def qr_code(activity, :svg) do
+    Map.fetch!(@qrcodes, activity.id)
   end
 
   def qr_code(activity, :base64) do

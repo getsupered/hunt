@@ -29,6 +29,8 @@ const hooks = {
   Notifications,
   ImageCarousel: {
     mounted() {
+      if (!window.Splide) { return }
+
       const splideEl = this.el.querySelector('.splide')
       const start = new URL(window.location.href).searchParams.get('feature') || 0
 

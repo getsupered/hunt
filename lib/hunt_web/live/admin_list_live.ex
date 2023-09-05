@@ -68,7 +68,10 @@ defmodule HuntWeb.AdminListLive do
       socket
       |> assign(:hunt_mods, Hunt.Activity.activity_modules())
 
-    {:ok, socket}
+    case socket.assigns.user do
+      %{admin: true} -> {:ok, socket}
+      _ -> {:ok, push_redirect(socket, to: "/")}
+    end
   end
 
   def handle_params(params, uri, socket) do
