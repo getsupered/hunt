@@ -14,6 +14,7 @@ defmodule Hunt.Application do
       Hunt.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Hunt.PubSub},
+      %{id: :pg, start: {:pg, :start_link, []}},
       {DNSCluster, query: Application.get_env(:hunt, :dns_cluster_query) || :ignore},
       Hunt.Activity.Leaderboard,
       # Start the Endpoint (http/https)

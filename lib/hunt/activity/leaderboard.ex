@@ -37,6 +37,8 @@ defmodule Hunt.Activity.Leaderboard do
 
     ets = :ets.new(:leaderboard, ets_opts)
 
+    :ok = :pg.join(__MODULE__, self())
+
     {:ok, %{scores_by_user: %{}, ets: ets}, {:continue, :load_initial}}
   end
 
@@ -47,7 +49,7 @@ defmodule Hunt.Activity.Leaderboard do
     {:noreply, state}
   end
 
-  def handle_call({:update_user, summary, user}, _from, state) do
+  def handle_info({:update_user, summary, user}, state) do
     completed_ids = Map.values(summary) |> Enum.flat_map(& &1.ids)
 
     achievements =
@@ -67,6 +69,16 @@ defmodule Hunt.Activity.Leaderboard do
     new_scores_by_user = Map.put(state.scores_by_user, user.id, new_score)
     state = %{state | scores_by_user: new_scores_by_user}
     Hunt.Activity.Leaderboard.OrderedLeaders.update_from_leaderboard_state(state)
+
+    {:noreply, state}
+  end
+
+  def handle_call({:update_user, summary, user}, _from, state) do
+    {:noreply, state} = handle_info({:update_user, summary, user}, state)
+
+    on_remotes(fn pid ->
+      send(pid, {:update_user, summary, user})
+    end)
 
     {:reply, :ok, state}
   end
@@ -142,5 +154,12 @@ defmodule Hunt.Activity.Leaderboard do
       end)
 
     %{state | scores_by_user: new_scores_by_user}
+  end
+
+  defp on_remotes(func) do
+    __MODULE__
+    |> :pg.get_members()
+    |> Kernel.--(:pg.get_local_members(__MODULE__))
+    |> Enum.each(func)
   end
 end
