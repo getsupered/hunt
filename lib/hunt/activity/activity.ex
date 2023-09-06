@@ -277,4 +277,16 @@ defmodule Hunt.Activity do
       %{pending | activity: activity}
     end)
   end
+
+  def hunt_qr do
+    svg_settings = %QRCode.Render.SvgSettings{image: {"priv/static/images/supered_svg_logo.svg", 100}}
+
+    {:ok, base64} =
+      "https://hunt.supered.io"
+      |> QRCode.create(:high)
+      |> QRCode.render(:svg, svg_settings)
+      |> QRCode.to_base64()
+
+    "data:image/svg+xml; base64, " <> base64
+  end
 end

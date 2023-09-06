@@ -74,6 +74,10 @@ defmodule HuntWeb.HuntCarousel do
                     </div>
                   <% end %>
                 </li>
+
+                <li class="!mt-10">
+                  <img src={Hunt.Activity.hunt_qr()} class="w-[50%] mx-auto" />
+                </li>
               </ul>
             </li>
 
