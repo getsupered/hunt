@@ -19,7 +19,7 @@ defmodule HuntWeb.ImageUploaderForm do
     socket =
       socket
       |> assign(:uploaded_files, [])
-      |> allow_upload(:image, accept: ~w(.jpg .jpeg), max_entries: 1)
+      |> allow_upload(:image, accept: ~w(.jpg .jpeg .png), max_entries: 1)
 
     {:ok, socket}
   end
