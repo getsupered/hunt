@@ -16,32 +16,54 @@ defmodule HuntWeb.Prizes do
         <ul class="space-y-4 text-lg">
           <li class="border rounded px-4 py-3 border-l-8 border-pink-600">
             <div class="font-bold">1st</div>
-            <div class="text-sm">Free Year of Supered (30 Pro Users)<br />Supered Backpack</div>
+            <div class="text-sm">
+              Free Year of Supered (30 Pro Users)<br />
+              Supered Backpack<br />
+              Supered Special Swag (After Conference)<br />
+              Extra round of drinks at Sprocketeer Afterparty
+            </div>
           </li>
 
           <li class="border rounded px-4 py-3 border-l-4 border-pink-600">
             <div class="font-bold">2nd</div>
-            <div class="text-sm">Free Year of Supered (20 Pro Users)</div>
+            <div class="text-sm">
+              Free Year of Supered (20 Pro Users)<br />
+              Supered Special Swag (After Conference)<br />
+              Extra round of drinks at Sprocketeer Afterparty
+            </div>
           </li>
 
           <li class="border rounded px-4 py-3 border-l-2 border-pink-600">
             <div class="font-bold">3rd</div>
-            <div class="text-sm">Free Year of Supered (10 Pro Users)</div>
+            <div class="text-sm">
+              Free Year of Supered (10 Pro Users)<br />
+              Supered Special Swag (After Conference)<br />
+              Extra round of drinks at Sprocketeer Afterparty
+            </div>
           </li>
 
           <li class="border rounded px-4 py-3 border-pink-600">
             <div class="font-bold">4th, 5th, 6th</div>
-            <div class="text-sm">Free Year of Supered (5 Pro Users)</div>
+            <div class="text-sm">
+              Free Year of Supered (5 Pro Users)<br />
+              Supered Special Swag (After Conference)<br />
+              Extra round of drinks at Sprocketeer Afterparty
+            </div>
           </li>
 
           <li class="border rounded px-4 py-3 border-pink-600">
             <div class="font-bold">Top 10</div>
-            <div class="text-sm">Supered Special Swag (After Conference)</div>
+            <div class="text-sm">
+              Supered Special Swag (After Conference)<br />
+              Extra round of drinks at Sprocketeer Afterparty
+            </div>
           </li>
 
           <li class="border rounded px-4 py-3 border-pink-600">
             <div class="font-bold">Top 20</div>
-            <div class="text-sm">Extra round of drinks at Sprocketeer Afterparty</div>
+            <div class="text-sm">
+              Extra round of drinks at Sprocketeer Afterparty
+            </div>
           </li>
 
           <li class="border rounded px-4 py-3 border-pink-600">
