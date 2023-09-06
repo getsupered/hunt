@@ -42,7 +42,10 @@ defmodule HuntWeb.HuntCarousel do
                     </div>
                   <% else %>
                     <a class="btn btn-primary block w-full text-center" href="/auth/google">Login with Google</a>
-                    <button class="btn btn-primary block w-full text-center">Login with Supered</button>
+
+                    <a class="btn btn-primary block w-full text-center" href={Application.fetch_env!(:hunt, :supered_jwt_url)}>
+                      Login with Supered
+                    </a>
                   <% end %>
                 </li>
 

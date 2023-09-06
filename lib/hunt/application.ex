@@ -5,23 +5,27 @@ defmodule Hunt.Application do
 
   use Application
 
+  @env Mix.env()
+
   @impl true
   def start(_type, _args) do
-    children = [
-      # Start the Telemetry supervisor
-      HuntWeb.Telemetry,
-      # Start the Ecto repository
-      Hunt.Repo,
-      # Start the PubSub system
-      {Phoenix.PubSub, name: Hunt.PubSub},
-      %{id: :pg, start: {:pg, :start_link, []}},
-      {DNSCluster, query: Application.get_env(:hunt, :dns_cluster_query) || :ignore},
-      Hunt.Activity.Leaderboard,
-      # Start the Endpoint (http/https)
-      HuntWeb.Endpoint
-      # Start a worker by calling: Hunt.Worker.start_link(arg)
-      # {Hunt.Worker, arg}
-    ]
+    children =
+      [
+        # Start the Telemetry supervisor
+        HuntWeb.Telemetry,
+        # Start the Ecto repository
+        Hunt.Repo,
+        # Start the PubSub system
+        {Phoenix.PubSub, name: Hunt.PubSub},
+        %{id: :pg, start: {:pg, :start_link, []}},
+        {DNSCluster, query: Application.get_env(:hunt, :dns_cluster_query) || :ignore},
+        if(@env != :test, do: Hunt.Activity.Leaderboard),
+        # Start the Endpoint (http/https)
+        HuntWeb.Endpoint
+        # Start a worker by calling: Hunt.Worker.start_link(arg)
+        # {Hunt.Worker, arg}
+      ]
+      |> Enum.reject(&is_nil/1)
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

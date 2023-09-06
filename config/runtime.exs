@@ -107,5 +107,8 @@ if config_env() == :prod do
       }
     ]
 
-  config :hunt, dns_cluster_query: "hunt.internal"
+  config :hunt,
+    dns_cluster_query: "hunt.internal",
+    supered_jwt_url: "http://app.supered.io/jwt/hunt",
+    supered_jwt_secret: System.get_env("HUNT_JWT_SECRET")
 end

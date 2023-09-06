@@ -9,7 +9,9 @@ import Config
 
 config :hunt,
   ecto_repos: [Hunt.Repo],
-  generators: [binary_id: true]
+  generators: [binary_id: true],
+  supered_jwt_url: "http://localhost:4000/jwt/hunt",
+  supered_jwt_secret: "local-only"
 
 # Configures the endpoint
 config :hunt, HuntWeb.Endpoint,

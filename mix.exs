@@ -50,7 +50,8 @@ defmodule Hunt.MixProject do
       {:ueberauth, "~> 0.10"},
       {:ueberauth_google, "~> 0.10"},
       {:faker, "~> 0.17", only: [:dev, :test]},
-      {:dns_cluster, "~> 0.1.0"}
+      {:dns_cluster, "~> 0.1.0"},
+      {:joken, "~> 2.6.0"}
     ]
   end
 

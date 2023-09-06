@@ -24,6 +24,7 @@ defmodule HuntWeb.Router do
     live "/admin/:hunt_id", AdminListLive
 
     get "/images/:id", ImageController, :serve
+    get "/jwt/login", JwtController, :login
   end
 
   scope "/auth", HuntWeb do
