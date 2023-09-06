@@ -20,7 +20,7 @@ import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
-import {Html5QrcodeScanner, Html5QrcodeSupportedFormats, Html5QrcodeScanType} from "html5-qrcode"
+import {Html5QrcodeScanner, Html5QrcodeSupportedFormats, Html5QrcodeScanType} from '../vendor/html5-qrcode/src/index'
 
 import topbar from "../vendor/topbar"
 import { Notifications } from "./hooks/Notification"

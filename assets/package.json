@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "html5-qrcode": "^2.3.8",
+    "lodash": "^4.17.21",
     "toastify-js": "^1.12.0"
   }
 }
