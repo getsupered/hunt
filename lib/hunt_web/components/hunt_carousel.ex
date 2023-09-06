@@ -16,6 +16,18 @@ defmodule HuntWeb.HuntCarousel do
 
                   <p>The Supered Dupered Challenge is a multi-day scavenger hunt to expand your INBOUND experience.</p>
                   <p>We'll be giving away prizes to the top performers, so try to complete as many as you can!</p>
+
+                  <div class="mx-auto w-[75%]">
+                    <div class='relative h-0 pb-[62.5%]'>
+                      <iframe
+                        title="Explainer video for the Supered Dupered Challenge"
+                        src="https://www.loom.com/embed/96e471724a634491893d5c3221f7242c?hideEmbedTopBar=true"
+                        frameBorder="0"
+                        allowFullScreen
+                        class='mx-auto absolute inset-0 w-full h-full'
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
