@@ -8,6 +8,8 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+<img width="250" alt="image" src="https://github.com/getsupered/hunt/assets/1231659/e2d0983d-66cb-4be8-b3e3-4e771d343b10">
+
 ## Seeds
 
 A fake leaderboard and completions are included as part of the setup process.
