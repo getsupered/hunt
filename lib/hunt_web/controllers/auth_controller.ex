@@ -31,4 +31,14 @@ defmodule HuntWeb.AuthController do
         |> redirect(to: "/")
     end
   end
+
+  def mock_login(conn, _params) do
+    {:ok, user} = Hunt.User.find_or_create_user(auth: %{info: %{email: "test@tester.com", first_name: "Test", last_name: "Testerson"}})
+
+    conn
+    |> put_flash(:info, "Successfully authenticated")
+    |> put_session(:current_user, user)
+    |> configure_session(renew: true)
+    |> redirect(to: "/")
+  end
 end

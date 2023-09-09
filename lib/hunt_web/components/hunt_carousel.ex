@@ -53,11 +53,19 @@ defmodule HuntWeb.HuntCarousel do
                       <a href="/auth/logout" class="btn btn-muted">Logout</a>
                     </div>
                   <% else %>
-                    <a class="btn btn-primary block w-full text-center" href="/auth/google">Login with Google</a>
+                    <div class="w-full space-y-4">
+                      <div class="flex items-center gap-4">
+                        <a class="btn btn-primary block w-full text-center" href="/auth/google">Login with Google</a>
 
-                    <a class="btn btn-primary block w-full text-center" href={Application.fetch_env!(:hunt, :supered_jwt_url)}>
-                      Login with Supered
-                    </a>
+                        <a class="btn btn-primary block w-full text-center" href={Application.fetch_env!(:hunt, :supered_jwt_url)}>
+                          Login with Supered
+                        </a>
+                      </div>
+
+                      <div class="w-full">
+                        <a class="btn btn-primary block w-full text-center" href="/auth/mock">Mock Login</a>
+                      </div>
+                    </div>
                   <% end %>
                 </li>
 

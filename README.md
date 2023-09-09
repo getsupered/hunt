@@ -14,8 +14,8 @@ A fake leaderboard and completions are included as part of the setup process.
 
 ## Login
 
-Locally, you will likely not be able to login unless you setup your own Google OAuth app. There
-is no non-OAuth login.
+Locally, you can use "Mock Login" to sign in with a testing account. In production, the auth mechanism
+are OAuth and JWT-based flows.
 
 ## Code
 

@@ -30,6 +30,7 @@ defmodule HuntWeb.Router do
   scope "/auth", HuntWeb do
     pipe_through :browser
 
+    get "/mock", AuthController, :mock_login
     get "/logout", AuthController, :delete
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
